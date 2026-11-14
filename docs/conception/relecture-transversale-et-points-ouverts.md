@@ -42,19 +42,21 @@ Les premières rédactions de 001 et 002 conservaient des hypothèses exploratoi
 - Sauvegarde/restauration **manuelles** des **deux bases ensemble** dans un ZIP.
 - Dialogue de perte potentielle : **Enregistrer / Ne pas enregistrer / Annuler**, avec trois effets distincts.
 
-## 3. Questions à trancher ensemble, si nous le souhaitons, avant les missions
+## 3. Arbitrages O-01 à O-05 — actualisation du 15 novembre 2026
 
-Ces éléments sont réellement **ouverts**. Les propositions ci-dessous sont des **recommandations**, **pas des décisions validées**.
+Quatre réponses ont été **validées par l'utilisateur** après la relecture. **O-04 reste à trancher** : la notion de raccourci global a été expliquée, mais aucune décision définitive n'a encore été donnée.
 
-| Réf. | Question | Option simple proposée | Incidence |
-|---|---|---|---|
-| **O-01** | **Accueil au lancement** : affiche-t-on la bibliothèque ou l'éditeur vide avec « Capturer » ? | Bibliothèque avec un bouton Capturer visible | Ergonomie de départ |
-| **O-02** | **Créer et gérer catégories/tags** : le panneau de droite suffit-il à créer les valeurs manquantes, ou faut-il un mini écran dédié pour renommer/supprimer ? | Création depuis la fiche ; gestion simple dans la bibliothèque, sans module autonome | Parcours documentaire |
-| **O-03** | **Filtre « À classer »** : doit-il exister en V0 ? Que signifie non classée ? | Filtre facultatif pour les captures sans catégorie (sans forcer le renseignement) | Bibliothèque |
-| **O-04** | **Raccourci global de capture** : indispensable dès V0 ou reporté ? | Reporté : bouton Capturer d'abord, `Ctrl + S` déjà validé | Intégration Windows |
-| **O-05** | **Nom proposé à l'export** et choix de format par défaut | Reprendre le titre de la capture, proposer PNG et laisser le dialogue Windows choisir le dossier | Export quotidien |
+| Réf. | Statut | Décision / question |
+|---|---|---|
+| **O-01** | **[VALIDÉ]** | **Accueil = petit bandeau flottant**, centré en haut de l'écran, semblable au sélecteur de l'Outil Capture d'écran de Windows. Commandes : **Plein écran · Rectangle · Fenêtre · Bibliothèque · Fermer**. Pas de bibliothèque ni d'éditeur vide en plein écran au lancement. Le mode **Rectangle** est présélectionné. Après la prise de vue, ouvrir l'éditeur image à gauche / fiche à droite. |
+| **O-02** | **[VALIDÉ]** | Création des catégories/tags depuis la fiche et **gestion simple** depuis la bibliothèque, sans application ou module autonome. |
+| **O-03** | **[VALIDÉ]** | Filtre **« À classer »** pour les captures **sans catégorie**, sans imposer de catégorie à l'enregistrement. |
+| **O-04** | **[OUVERT]** | Raccourci clavier **global** = permet d'appeler Ma Capture même quand une autre application est active, à la manière de `Win + Maj + S` pour l'outil Windows. **Proposition non encore validée : reporter après V0** pour éviter une intégration globale inutile. Ce point ne concerne pas `Ctrl + S`, déjà validé pour enregistrer dans l'éditeur. |
+| **O-05** | **[VALIDÉ]** | Nom d'export proposé = **titre de la capture**, format proposé par défaut = **PNG**, choix du dossier dans le dialogue Windows. |
 
-Aucune de ces décisions n'exige de revoir la structure des deux bases ni les principes du document 004.
+**[VALIDÉ — méthode de travail]** Les **maquettes graphiques seront conçues et validées ensemble dans la conversation utilisateur/assistant, avant toute mission Codex**. Prévoir au minimum le bandeau flottant, l'éditeur (avec panneau documentaire à droite), la bibliothèque mosaïque et la bibliothèque liste. **Aucune mission Codex ni implémentation pour fabriquer les maquettes avant cette validation.**
+
+Les documents 002 et 005 décrivent l'ergonomie générale et les exigences existantes ; leurs détails d'accueil et de navigation seront alignés lorsque les maquettes auront été validées. Il ne s'agit pas de rouvrir le schéma de données ou les règles d'intégrité.
 
 ## 4. Détails qui peuvent attendre les maquettes ou la première recette
 
@@ -95,8 +97,8 @@ Ils **ne doivent pas bloquer** le lancement du projet s'ils restent ouverts jusq
 
 ## 7. Organisation de la suite
 
-1. **Discuter éventuellement O-01 à O-05** : ce sont les seuls choix ergonomiques restants qui méritent une décision explicite avant la première mission.
-2. Laisser **O-06 à O-11** aux maquettes et à la recette ; laisser **T-01 à T-07** à l'implémentation encadrée par les critères du document 005.
-3. Une fois les choix importants arrêtés, préparer **des missions Codex de taille limitée**, chacune avec ses critères de recette. **Aucune mission n'est lancée par cette relecture.**
+1. **Décider éventuellement O-04**, désormais seul arbitrage ouvert parmi O-01 à O-05.
+2. **Créer et valider les maquettes graphiques ensemble, sans Codex** : bandeau d'accueil, éditeur, bibliothèque mosaïque/liste ; préciser au besoin O-06 à O-11 pendant cette étape.
+3. Aligner les descriptions d'interface des documents 002 et 005 avec les **maquettes validées**, puis seulement préparer des missions Codex limitées et vérifiables. Les détails T-01 à T-07 relèvent de l'implémentation encadrée. **Aucune mission n'est lancée ici.**
 
 **Conclusion :** la conception fonctionnelle est suffisamment cohérente pour préparer le travail ; **elle ne nécessite pas une nouvelle étude d'architecture**.
