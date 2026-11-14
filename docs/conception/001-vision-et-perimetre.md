@@ -4,7 +4,7 @@
 |---|---|
 | Projet | **Ma Capture** — application Windows de capture d’écran, d’annotation et de classement |
 | Nature | Document d’encadrement **fonctionnel**, préalable à toute mission de développement |
-| Version du document | **0.1** |
+| Version du document | **0.2 — harmonisation transversale** |
 | Date | **14 novembre 2026** |
 | Statut | **Cadrage en cours** : décisions actées et questions ouvertes identifiées |
 | Document suivant | 002 — Parcours utilisateurs et ergonomie *(à rédiger)* |
@@ -66,7 +66,7 @@ D’autres fonctions seront volontairement exclues si elles compromettent la sim
 
 **[VALIDÉ]** La capture doit être placée sans délai dans un **espace de récupération persistant**, afin de ne pas disparaître en cas de plantage avant son enregistrement définitif. Il ne s’agit **pas** d’une table SQLite `TEMP`, qui disparaîtrait avec sa connexion.
 
-**[À ÉTUDIER]** La combinaison exacte des modes de capture en V0 (zone, fenêtre, écran entier), la manière de les déclencher et les raccourcis globaux. Ces modes constituent la cible fonctionnelle, mais le détail sera arrêté dans le document 002.
+**[VALIDÉ]** Les trois modes de V0 sont **zone rectangulaire, fenêtre et écran entier**, avec **zone rectangulaire présélectionnée au lancement**. Le raccourci global éventuel reste un détail non décidé.
 
 ### 3.2 Annoter et documenter, sans étape supplémentaire
 
@@ -92,7 +92,7 @@ L’utilisateur travaille depuis **un seul écran d’édition** :
 
 Les prises de vues successives doivent donc être fluides : *capturer → éventuellement annoter / renseigner → Enregistrer → capturer à nouveau*.
 
-**[À ÉTUDIER]** Le retour visuel de confirmation et le comportement exact à l’ouverture d’une nouvelle capture lorsque l’édition courante n’a pas été enregistrée.
+**[VALIDÉ]** En cas de travail non enregistré, la nouvelle capture, la navigation ou la fermeture sont protégées par **Enregistrer / Ne pas enregistrer / Annuler** ; Annuler conserve le travail courant et renonce à l'action demandée. La sauvegarde normale donne une confirmation discrète.
 
 ### 3.4 Revenir plus tard
 
@@ -112,7 +112,7 @@ L’absence de classement immédiat ne bloque jamais l’enregistrement.
 
 **[VALIDÉ]** Après export, **aucune traçabilité** n’est conservée sur le fichier exporté : pas de table d’historique des exports, pas de mémorisation de son chemin comme dépendance, pas de vérification de son existence, pas de tentative de le retrouver ou de le resynchroniser. Ce fichier est une **copie indépendante**.
 
-**[À ÉTUDIER]** L’éventuelle fonction de **copie sortante** de l’image annotée vers le presse-papiers ; elle ne doit pas être confondue avec le collage entrant d’images, explicitement exclu.
+**[VALIDÉ]** La **copie sortante** de l'image annotée vers le presse-papiers est prévue. Export et copie rendent **l'état visible, même non enregistré**, sans archiver automatiquement ; aucun collage entrant d'images n'est autorisé.
 
 ## 4. Modèle d’annotation
 
@@ -133,14 +133,14 @@ L’épaisseur et la couleur du tracé doivent être réglables. L’ergonomie p
 ### 4.2 Une seule couche logique [VALIDÉ]
 
 - La capture originale est **préservée**.
-- Les annotations sont stockées **séparément**, avec leurs caractéristiques (type, position, dimensions, style, texte).
+- Les annotations sont **indépendantes de l'image originale** et conservées en **JSON dans la fiche Captures**, avec leurs caractéristiques (type, position, dimensions, style, texte).
 - L’affichage compose l’original et **une unique couche logique d’objets d’annotation**.
 - Lors de l’export seulement, cette composition est rendue en PNG/JPEG.
 - Aucun empilement complexe de calques, aucun système de masques, aucune ambition de logiciel de dessin professionnel.
 
 Les coordonnées des objets devront être associées à l’image source plutôt qu’au seul zoom d’affichage.
 
-**[À ÉTUDIER]** Annuler/Rétablir pendant une séance, manipulation exacte des poignées de redimensionnement, ordre d’affichage des annotations, et coût d’une éventuelle conservation de versions. La V0 ne présuppose **pas** un historique permanent de type Photoshop.
+**[VALIDÉ]** Annuler/Rétablir fonctionne **pendant la séance seulement**. **Aucun versionnage permanent** en V0. Les poignées de redimensionnement et l'ordre d'affichage exact restent des détails d'ergonomie à affiner.
 
 ## 5. Bibliothèque et données
 
@@ -153,38 +153,28 @@ Le modèle fonctionnel distingue clairement :
 3. **Annotations** : objets éditables associés à la capture.
 4. **Données documentaires** : commentaires, catégories et tags, avec les relations adaptées.
 
-Une même image originale pourra **éventuellement** servir à plusieurs documents ou variantes sans recopier son BLOB ; cette capacité a été jugée intéressante, mais **n’oblige pas** à construire un système de versions complet en V0.
+**[VALIDÉ] Une capture correspond à une image, sans partage de BLOB entre captures en V0.** Les annotations courantes sont enregistrées au format JSON **dans la fiche Captures** ; la couche visuelle reste indépendante de l'image originale.
 
 ### 5.2 Principes d’identification [VALIDÉ]
 
 - Des **identifiants internes entiers** attribués automatiquement.
 - **Aucun GUID/UUID** ajouté par principe.
 - L’identifiant ne dépend pas du nom affiché.
-- Le détail SQLite (`INTEGER PRIMARY KEY`, nécessité réelle ou non de `AUTOINCREMENT`) sera tranché dans le document 003, sans sur-ingénierie.
+- Le modèle retient **`INTEGER PRIMARY KEY`**, sans GUID ni nécessité de non-réutilisation d'un ID effacé.
 
 ### 5.3 Isolation des images volumineuses [VALIDÉ]
 
 Les images archivées seront conservées sous forme binaire **BLOB**, pas sous forme de chaînes Base64 ou hexadécimales.
 
-La table dédiée au contenu binaire doit rester conceptuellement minimale : **`Images(id, blob)`**, point. Les métadonnées et relations résident dans d’autres tables. La recherche documentaire ne doit pas charger les images complètes inutilement.
+**[VALIDÉ]** Deux fichiers SQLite : **`catalogue.db`** (modèle métier) et **`images.db`** (entrepôt binaire, comparable à un dossier d'images). Sa table **`Images(id, blob, sha256)`** ne contient que l'ID, le contenu binaire et son SHA-256 de **32 octets**. Aucun lien SQL interbase imposé ; les recherches documentaires ne chargent pas les originaux.
 
-**[À ÉTUDIER]** Une seule base SQLite contenant plusieurs tables, ou deux bases distinctes (catalogue et BLOB). La séparation physique n’est **pas** décidée. L’étude devra considérer performances réelles, intégrité transactionnelle, références entre bases, sauvegardes et simplicité de maintenance.
+### 5.4 Gestion des captures non encore archivées [VALIDÉ]
 
-### 5.4 Gestion des captures non encore archivées [VALIDÉ / À ÉTUDIER]
+La capture non enregistrée est protégée par un **PNG provisoire local** et un **JSON de travail**. Une seule capture active à la fois : pas de capture en rafale ni d'écrasement silencieux. Pour une capture archivée en cours de modification, le JSON provisoire suffit ; son BLOB original existe déjà.
 
-**[VALIDÉ]** La capture en cours doit être récupérable après fermeture anormale : **ne pas perdre silencieusement l’image avant Enregistrer**.
+Après l'insertion du BLOB et de son SHA dans `images.db`, la fiche est insérée dans `catalogue.db`. **Le provisoire n'est supprimé qu'après succès de la fiche**, ou après abandon explicite. Au redémarrage, l'application propose la récupération du travail et un **contrôle des ID** nettoie silencieusement les orphelins non liés à ce provisoire.
 
-**[À ÉTUDIER]** Son support technique : ligne persistante dans une table d’attente, ou **fichier de travail local externe**. Le fichier externe est une piste recevable s’il offre un avantage concret de simplicité, vitesse ou sûreté ; SQLite n’est pas une obligation pour chaque étape.
-
-Dans l’hypothèse du fichier externe :
-- un **nom fixe** peut être envisagé si une seule capture non archivée est autorisée à la fois ;
-- sinon, il faut éviter tout écrasement d’une capture encore récupérable ;
-- la transition vers la bibliothèque doit être vérifiée **avant** toute suppression du provisoire ;
-- un redémarrage après incident doit proposer la **récupération** ;
-- la conservation éventuelle des annotations en cours doit être précisée ;
-- la politique de suppression lors d’une **fermeture normale** ou d’un abandon volontaire reste à expliciter.
-
-Une seule capture éditée à la fois paraît une option simple pour V0, **sans décision ferme** sur la gestion de plusieurs brouillons.
+La **sauvegarde/restauration manuelle en ZIP des deux bases** est définie dans le document 004. Les détails d'écriture sûre du JSON sont précisés au même endroit.
 
 ## 6. Principes d’interface [VALIDÉ]
 
@@ -224,30 +214,19 @@ Les stratégies de sauvegarde, de migration, de réparation et les scénarios de
 | D-011 | Multimoniteur avancé et fonctionnalités lourdes **hors V0**. |
 | D-012 | **Pas de mission Codex** tant que le dossier de conception n’est pas suffisamment défini et validé. |
 
-## 9. Arbitrages restant ouverts
+## 9. Points encore ouverts après consolidation
 
-Les points suivants ne doivent pas être interprétés comme des commandes de réalisation :
+Les anciennes questions Q-001 à Q-010 ont été **majoritairement arbitrées** par les documents 002 à 005 : modes de capture, sauvegarde, récupération, architecture à deux bases, annotations, versionnage, copie sortante et critères de recette.
 
-| Réf. | Question | À traiter dans |
-|---|---|---|
-| Q-001 | Quels modes de capture et raccourcis exacts dès V0 ? | 002 / 005 |
-| Q-002 | Que faire si une nouvelle capture est demandée alors qu’une capture non archivée existe ? | 002 / 004 |
-| Q-003 | Politique exacte pour fermer, abandonner, récupérer et purger le provisoire ? | 002 / 004 |
-| Q-004 | Stockage provisoire en base ou en fichier externe ? Une seule capture active ? | 003 / 004 |
-| Q-005 | Une ou deux bases SQLite ? Quelles conséquences transactionnelles et de sauvegarde ? | 003 / 004 |
-| Q-006 | Historique Annuler/Rétablir et versions persistantes : coût / intérêt / limites ? | 002 / 003 |
-| Q-007 | Quels champs, relations catégorie/tag, miniatures et filtres pour la bibliothèque ? | 002 / 003 |
-| Q-008 | Copie **sortante** vers le presse-papiers : incluse ou différée ? | 002 |
-| Q-009 | Comment représenter et restaurer une édition interrompue, annotations incluses ? | 003 / 004 |
-| Q-010 | Quelles vérifications définissent une V0 acceptable ? | 005 |
+Les **détails encore réellement ouverts** sont consignés dans le [registre de relecture transversale](relecture-transversale-et-points-ouverts.md). Ils ne doivent pas être transformés silencieusement en fonctionnalités.
 
-## 10. Suite du dossier de conception
+## 10. Dossier de conception consolidé
 
-Les documents prévus, **sans démarrage de développement à ce stade**, sont :
+- [002 — Parcours utilisateurs et ergonomie](002-parcours-utilisateurs-et-ergonomie.md)
+- [003 — Architecture et modèle de données](003-architecture-et-modele-de-donnees.md)
+- [004 — Intégrité, sauvegardes et cas limites](004-integrite-sauvegardes-et-cas-limites.md)
+- [005 — Exigences et critères de validation](005-exigences-et-criteres-de-validation.md)
 
-- **002 — Parcours utilisateurs et ergonomie** : écrans, interactions, outils, flux de capture en série.
-- **003 — Architecture et modèle de données** : séparation BLOB, SQLite, identifiants, stockage provisoire, versionnage.
-- **004 — Intégrité, sauvegardes et cas limites** : fermeture, plantage, récupération, corruption, transactions, restauration.
-- **005 — Exigences et critères de validation** : exigences numérotées, recettes, définition précise de V0.
+**Aucune mission Codex n'est déclenchée par cette consolidation.**
 
 **Règle de gouvernance :** une discussion exploratoire n’est pas une décision de construire. Les éléments marqués **[À ÉTUDIER]** doivent être arbitrés explicitement avant d’être transformés en exigences ou en missions.
