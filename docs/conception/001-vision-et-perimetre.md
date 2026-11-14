@@ -7,7 +7,7 @@
 | Version du document | **0.2 — harmonisation transversale** |
 | Date | **14 novembre 2026** |
 | Statut | **Cadrage en cours** : décisions actées et questions ouvertes identifiées |
-| Document suivant | 002 — Parcours utilisateurs et ergonomie *(à rédiger)* |
+| Document suivant | [002 — Parcours utilisateurs et ergonomie](002-parcours-utilisateurs-et-ergonomie.md) |
 
 > **Convention de lecture** — **[VALIDÉ]** signifie explicitement retenu lors du cadrage ; **[À ÉTUDIER]** signifie qu’aucune solution définitive n’a été arrêtée ; **[HORS V0]** désigne une fonction volontairement écartée de la première version. Ce document n’autorise **aucune implémentation** ni mission Codex à ce stade.
 
