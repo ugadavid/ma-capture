@@ -4,7 +4,7 @@
 |---|---|
 | Projet | **Ma Capture** |
 | Nature | Document de conception — protection des données et comportement après interruption |
-| Version | **0.1** |
+| Version | **0.2 — harmonisation transversale** |
 | Date | **14 novembre 2026** |
 | Statut | **Cadrage fonctionnel et technique** ; critères de recette à formaliser dans le document 005 |
 | Documents précédents | [001 — Vision et périmètre](001-vision-et-perimetre.md) · [002 — Ergonomie](002-parcours-utilisateurs-et-ergonomie.md) · [003 — Architecture et modèle de données](003-architecture-et-modele-de-donnees.md) |
@@ -168,7 +168,7 @@ Si une interruption survient entre les deux, la **fiche sans image** est détect
 
 Les catégories et tags qui peuvent être utilisés par d'autres fiches ne sont pas supprimés automatiquement.
 
-**[À PRÉCISER DANS LE DOCUMENT 005 / RECETTE UX]** La confirmation utilisateur lorsqu'il demande volontairement de supprimer une capture. Le nettoyage technique des orphelins, lui, n'exige pas de confirmation.
+**[VALIDÉ]** La suppression **volontaire** d'une capture dans la bibliothèque demande **confirmation**. Si l'utilisateur annule, la capture, son BLOB et ses associations sont conservés. Le nettoyage technique des orphelins au démarrage, lui, reste **silencieux**, sans confirmation.
 
 ## 9. Sauvegarde manuelle : deux bases, un ZIP [VALIDÉ]
 
