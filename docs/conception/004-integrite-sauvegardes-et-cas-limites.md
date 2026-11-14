@@ -31,7 +31,7 @@ Deux situations sont distinctes :
 | **Nouvelle capture non archivée** | L'image originale dans `capture-en-cours.png` | JSON avec titre, annotations, textes et tags en cours |
 | **Capture archivée, puis modifiée** | BLOB original dans `images.db`, fiche enregistrée dans `catalogue.db` | JSON avec `capture_id` et **état de travail modifié** |
 
-**[VALIDÉ]** Une seule capture est éditée à la fois. Les fichiers provisoires ont donc des noms stables, dans un **répertoire local persistant propre à Ma Capture**, et ne servent pas de système de capture en rafale.
+**[VALIDÉ]** Une seule capture est éditée à la fois. Les fichiers provisoires ont donc des noms stables, dans un **répertoire local persistant propre à Ma Capture**, et ne servent pas de système de capture en rafale. Les noms de travail retenus dans le document 003 sont **`travail/capture-en-cours.png`** pour une nouvelle image et **`travail/capture-en-cours.json`** pour l'état éditable (y compris lors de la modification d'une capture archivée). Le PNG n'est pas nécessaire lorsque le BLOB original existe déjà.
 
 **[VALIDÉ]** La protection provisoire est une sécurité **avant** la sauvegarde normale ; elle **n'est pas** un historique de versions. Le seul état définitif des annotations est `Captures.annotations_json` ; Annuler/Rétablir n'existe que pour la séance d'édition.
 
