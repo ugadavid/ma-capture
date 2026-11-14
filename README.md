@@ -8,7 +8,7 @@ Application Windows locale dédiée à la **capture d’écran**, à son **annot
 
 1. [001 — Vision et périmètre fonctionnel](docs/conception/001-vision-et-perimetre.md) — objectifs, parcours, fonctions incluses/exclues, principes confirmés et arbitrages ouverts.
 2. [002 — Parcours utilisateurs et ergonomie](docs/conception/002-parcours-utilisateurs-et-ergonomie.md) — écrans, outils, raccourcis, bibliothèque et dialogue **Enregistrer / Ne pas enregistrer / Annuler**.
-3. 003 — Architecture et modèle de données *(à rédiger)*.
+3. [003 — Architecture et modèle de données](docs/conception/003-architecture-et-modele-de-donnees.md) — deux bases SQLite, BLOB et SHA-256, annotations, fichier provisoire et contrôle de cohérence.
 4. 004 — Intégrité, sauvegardes et cas limites *(à rédiger)*.
 5. 005 — Exigences et critères de validation *(à rédiger)*.
 
