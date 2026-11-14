@@ -7,7 +7,7 @@ Application Windows locale dédiée à la **capture d’écran**, à son **annot
 ## Dossier de conception
 
 1. [001 — Vision et périmètre fonctionnel](docs/conception/001-vision-et-perimetre.md) — objectifs, parcours, fonctions incluses/exclues, principes confirmés et arbitrages ouverts.
-2. 002 — Parcours utilisateurs et ergonomie *(à rédiger)*.
+2. [002 — Parcours utilisateurs et ergonomie](docs/conception/002-parcours-utilisateurs-et-ergonomie.md) — écrans, outils, raccourcis, bibliothèque et dialogue **Enregistrer / Ne pas enregistrer / Annuler**.
 3. 003 — Architecture et modèle de données *(à rédiger)*.
 4. 004 — Intégrité, sauvegardes et cas limites *(à rédiger)*.
 5. 005 — Exigences et critères de validation *(à rédiger)*.
