@@ -4,9 +4,9 @@
 |---|---|
 | Projet | **Ma Capture** |
 | Nature | Spécification des exigences de V0 et plan de recette |
-| Version | **0.1** |
+| Version | **0.2 — relecture transversale** |
 | Date | **14 novembre 2026** |
-| Statut | **Cadrage fonctionnel consolidé — prêt pour relecture croisée des cinq documents, pas encore une mission Codex** |
+| Statut | **Cadrage fonctionnel consolidé — relecture transversale effectuée ; points ouverts répertoriés ; aucune mission Codex** |
 | Sources | [001 — Vision et périmètre](001-vision-et-perimetre.md) · [002 — Parcours utilisateurs et ergonomie](002-parcours-utilisateurs-et-ergonomie.md) · [003 — Architecture et modèle de données](003-architecture-et-modele-de-donnees.md) · [004 — Intégrité, sauvegardes et cas limites](004-integrite-sauvegardes-et-cas-limites.md) |
 
 > **Objet.** Transformer les décisions déjà prises en exigences **observables** et en scénarios de validation, sans élargir le périmètre. Ce document ne prescrit **ni implémentation immédiate, ni nombre arbitraire de tests, ni mission Codex**.
@@ -266,7 +266,7 @@ Le dossier de conception comprend désormais :
 4. [004 — Intégrité, sauvegardes et cas limites](004-integrite-sauvegardes-et-cas-limites.md)
 5. **005 — Exigences et critères de validation** (présent document)
 
-**Étape suivante : relire la cohérence des cinq documents** avant de rédiger des missions Codex. Les décisions les plus récentes prévalent, mais les formulations anciennes éventuellement contradictoires seront harmonisées lors de cette relecture.
+**Relecture transversale effectuée :** voir le [registre des points ouverts](relecture-transversale-et-points-ouverts.md). Les anciennes formulations contradictoires des documents 001 à 004 ont été harmonisées ; aucun développement n'a été lancé.
 
 **Rappel :** publier ce document **n’est pas** lancer une mission, créer du code, figer la maquette ou accepter une version de l’application.
 
