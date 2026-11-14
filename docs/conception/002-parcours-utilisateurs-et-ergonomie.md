@@ -4,7 +4,7 @@
 |---|---|
 | Projet | **Ma Capture** |
 | Nature | Document de conception fonctionnelle et ergonomique |
-| Version du document | **0.1** |
+| Version du document | **0.2 — harmonisation transversale** |
 | Date | **14 novembre 2026** |
 | Statut | **Cadrage** — décisions validées, précisions techniques différées |
 | Document précédent | [001 — Vision et périmètre fonctionnel](001-vision-et-perimetre.md) |
@@ -73,7 +73,7 @@ La V0 propose :
 
 L’utilisateur choisit le mode depuis une commande de capture simple. La **gestion multimoniteur avancée** n’est pas une priorité de V0.
 
-**[À PRÉCISER]** Le mode sélectionné par défaut, l’éventuelle mémorisation du dernier mode, les détails du survol des fenêtres et les raccourcis de déclenchement globaux. Aucun mécanisme de capture en rafale n’est demandé.
+**[VALIDÉ]** La **zone rectangulaire est présélectionnée au lancement**. **[À PRÉCISER]** Survol des fenêtres et éventuel raccourci global de déclenchement. Aucun mécanisme de capture en rafale n’est demandé.
 
 ### 3.2 Arrivée dans l’éditeur [VALIDÉ]
 
@@ -126,7 +126,7 @@ Les textes placés sur l’image sont des **annotations graphiques** ; ils sont 
 
 Une capture conservée dans la bibliothèque, rouverte ultérieurement, présente des annotations **toujours modifiables**. Il n’y a qu’**une couche logique d’annotations**, sans panneau de calques ou moteur de retouche avancée.
 
-**[À PRÉCISER]** Gestion des poignées, ordre visuel d’annotations qui se recouvrent, style exact des textes, limites de l’historique Annuler/Rétablir et éventuel versionnage persistant. Le coût d’un historique permanent relève du document 003.
+**[VALIDÉ]** Aucun versionnage permanent : Annuler/Rétablir ne conserve que l'historique de la séance d'édition. **[À PRÉCISER]** Poignées, superpositions, style des textes et limite de l'historique en mémoire.
 
 ### 4.3 Zoom et navigation [VALIDÉ]
 
@@ -240,7 +240,7 @@ Si l’utilisateur clique **Enregistrer** mais que l’écriture échoue, l’ap
 
 Cette interprétation maintient la sémantique « Annuler = renoncer à l’action demandée, sans perte de données ». L’image doit être **visible** au moment de cette proposition, pas cachée derrière un écran de démarrage vide.
 
-**[À PRÉCISER]** La restitution d’annotations et de champs documentaires saisis avant le plantage, la fréquence de persistance provisoire et la suppression sûre des brouillons (documents 003 et 004). La récupération de **l’image** est non négociable ; l’étendue de récupération du travail supplémentaire sera spécifiée et testée.
+**[VALIDÉ]** La récupération porte sur l'image et sur le **dernier JSON provisoire écrit avec succès** : annotations et champs documentaires sont restaurés dans la mesure de leur persistance effective. Pour une capture déjà archivée, le JSON contient son ID et le BLOB original n'est pas copié. Les modalités sont précisées au document 004.
 
 ## 9. Parcours P-07 — Retrouver et modifier une capture
 
@@ -260,7 +260,7 @@ L’utilisateur peut :
 
 L’édition d’une capture archivée rouvre **le même écran**, sans second éditeur spécialisé.
 
-**[À PRÉCISER]** Colonnes définitives, recherche multi-termes, miniatures, comportement des filtres multiples, choix de vue mémorisé ou non, suppression d’une capture, et existence éventuelle d’un filtre « À classer ». Ces détails ne doivent pas provoquer la création d’un gestionnaire universel d’images.
+**[VALIDÉ]** Les miniatures affichent **le dernier état enregistré avec annotations** et la suppression volontaire d'une capture demande **confirmation**. **[À PRÉCISER]** Colonnes définitives, recherche multi-termes, filtres multiples, mémorisation de la vue et éventuel filtre « À classer ». Ces détails ne doivent pas provoquer la création d’un gestionnaire universel d’images.
 
 ### 9.2 Travail en cours lors de la navigation
 
@@ -285,7 +285,7 @@ Une commande **Copier l’image annotée** place le rendu dans le presse-papiers
 
 ### 10.3 Travaux non enregistrés et export
 
-**[À PRÉCISER]** Si la capture ou ses annotations ont des modifications non enregistrées, décider si « Exporter / Copier » rend l’état visible courant ou demande d’enregistrer d’abord. Dans tous les cas, **Exporter ne doit pas être confondu avec Enregistrer dans la bibliothèque**.
+**[VALIDÉ]** Exporter ou Copier rend **l'état actuellement visible, même non enregistré**, sans le sauvegarder dans la bibliothèque ni modifier la fiche déjà enregistrée. Export et Enregistrer restent deux actions indépendantes.
 
 ## 11. Tableau des raccourcis proposés
 
@@ -339,10 +339,10 @@ Les conditions de test précises, erreurs et critères quantifiables seront dév
 | U-011 | Export PNG/JPEG sans suivi ; copie **sortante** de l’image annotée |
 | U-012 | Pas d’import, de collage entrant, de scan du disque ni de capture en rafale |
 
-## 14. Questions transmises aux documents suivants
+## 14. Décisions consolidées et points d'ergonomie encore ouverts
 
-- **003 — Architecture et données :** stockage provisoire fichier/base ; une ou deux bases SQLite ; modèle des annotations ; stratégie d’ID ; miniatures ; coût des versions ; persistance d’Annuler/Rétablir.
-- **004 — Intégrité et récupération :** moment et sûreté de la sauvegarde provisoire ; garantie sur les annotations/documentation après plantage ; élimination du provisoire après réussite ou abandon explicite ; fermeture normale ; erreurs d’écriture ; restauration.
-- **005 — Exigences et tests :** transformer les scénarios UX-01 à UX-14 en critères observables et tests automatisés/manuels ; vérifier notamment la sémantique exacte du dialogue à trois boutons.
+Les documents [003](003-architecture-et-modele-de-donnees.md), [004](004-integrite-sauvegardes-et-cas-limites.md) et [005](005-exigences-et-criteres-de-validation.md) ont ensuite fixé : deux bases indépendantes, provisoire PNG/JSON, absence de versionnage permanent, miniatures annotées, suppression avec confirmation et export de l'état visible non enregistré.
+
+Les détails non tranchés (raccourci global de capture, gestion pratique des catégories et tags, éventuel filtre « À classer », choix graphiques) sont consignés dans le [registre de relecture transversale](relecture-transversale-et-points-ouverts.md).
 
 **Rappel :** aucune mission Codex n’est déclenchée par la publication de ce document. La conception et ses arbitrages restent prioritaires.
