@@ -4,7 +4,7 @@
 |---|---|
 | Projet | **Ma Capture** |
 | Nature | Document de conception technique et de modèle de données, **sans implémentation** |
-| Version | **0.1** |
+| Version | **0.2 — harmonisation transversale** |
 | Date | **14 novembre 2026** |
 | État | Architecture générale arrêtée ; détails de sûreté différés au document 004 |
 | Documents précédents | [001 — Vision et périmètre](001-vision-et-perimetre.md) · [002 — Parcours et ergonomie](002-parcours-utilisateurs-et-ergonomie.md) |
@@ -196,7 +196,7 @@ Le JSON de **récupération provisoire**, s'il existe, est un filet de sécurit�
 - La miniature peut être régénérée à partir de l'original si besoin ; elle n'est pas la référence documentaire.
 - Éviter le chargement simultané d'une bibliothèque entière de BLOB complets.
 
-**[À PRÉCISER]** Taille et encodage des miniatures, choix de les montrer avec ou sans annotations, actualisation après modification et pagination éventuelle. Ne pas surdimensionner ce sous-système avant d'en mesurer le besoin.
+**[VALIDÉ]** Les miniatures montrent **l'image avec les annotations du dernier enregistrement** ; elles sont actualisées si les annotations enregistrées changent. **[À PRÉCISER]** Dimensions, encodage et éventuelle pagination. Ne pas surdimensionner ce sous-système avant d'en mesurer le besoin.
 
 ## 6. Capture de travail provisoire [ORIENTATION FORTE]
 
@@ -254,11 +254,11 @@ L'éventuelle restauration des **modifications non enregistrées d'une fiche dé
 
 ### 7.3 Export et presse-papiers [VALIDÉ]
 
-L'application compose l'image originale et le JSON d'annotations courant ou visible, puis produit :
+**[VALIDÉ]** L'application compose l'image originale et **l'état des annotations actuellement visible, même non enregistré**, puis produit :
 - un fichier PNG/JPEG, ou
 - une image copiée **vers** le presse-papiers.
 
-**Aucun chemin ni historique d'export** n'est inscrit dans les bases. Aucun fichier exporté n'est surveillé. Aucun import/collage d'image **entrant** n'est prévu.
+**Aucun chemin ni historique d'export** n'est inscrit dans les bases. **Exporter/Copier ne déclenche jamais l'enregistrement de la capture ni de ses modifications.** Aucun fichier exporté n'est surveillé. Aucun import/collage d'image **entrant** n'est prévu.
 
 ### 7.4 Suppression [VALIDÉ]
 
@@ -271,7 +271,7 @@ Ordre voulu :
 
 Si une interruption se produit entre les deux, la fiche restée sans image sera automatiquement purgée au prochain contrôle de cohérence. Il n'y a **aucune FK interbase**.
 
-La confirmation ergonomique d'une suppression volontaire reste à préciser ; la purge technique des incohérences au démarrage, elle, est **silencieuse**.
+**[VALIDÉ]** Toute suppression **volontaire** demandée depuis l'interface exige une **confirmation** ; la purge technique des incohérences au démarrage reste **silencieuse**.
 
 ## 8. SHA-256 : reconnaître une insertion interrompue [VALIDÉ]
 
