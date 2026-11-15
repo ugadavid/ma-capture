@@ -4,7 +4,7 @@
 |---|---|
 | Projet | **Ma Capture** |
 | Nature | Spécification des exigences de V0 et plan de recette |
-| Version | **0.2 — relecture transversale** |
+| Version | **0.3 — alignement prototype HTML et Favoris** |
 | Date | **14 novembre 2026** |
 | Statut | **Cadrage fonctionnel consolidé — relecture transversale effectuée ; points ouverts répertoriés ; aucune mission Codex** |
 | Sources | [001 — Vision et périmètre](001-vision-et-perimetre.md) · [002 — Parcours utilisateurs et ergonomie](002-parcours-utilisateurs-et-ergonomie.md) · [003 — Architecture et modèle de données](003-architecture-et-modele-de-donnees.md) · [004 — Intégrité, sauvegardes et cas limites](004-integrite-sauvegardes-et-cas-limites.md) |
@@ -15,9 +15,9 @@
 
 ## 1. Périmètre et philosophie de la recette
 
-**V0 =** capturer une zone, une fenêtre ou un écran ; annoter **immédiatement** sur la capture ; renseigner ou non une fiche documentaire ; enregistrer en bibliothèque ; retrouver et rééditer ; exporter ou copier l’image annotée ; récupérer simplement un travail interrompu.
+**V0 =** après un splash court, afficher le bandeau compact ; capturer une zone, une fenêtre ou un écran ; annoter **immédiatement** sur la capture ; renseigner ou non une fiche documentaire ; enregistrer en bibliothèque ; retrouver, ajouter aux **Favoris** et rééditer ; exporter ou copier l’image annotée ; récupérer simplement un travail interrompu. **Raccourci global : `Ctrl + Alt + C`.**
 
-**Hors périmètre :** import de fichiers image ; collage **entrant** d’images ; indexation ou scan des dossiers ; suivi des exports ; capture vidéo ; OCR ; retouche photo avancée ; calques multiples ; versionnage permanent ; capture en rafale ; multimoniteur avancé ; cloud ; serveur ; multiutilisateur.
+**Hors périmètre :** import de fichiers image ; collage **entrant** d’images ; indexation ou scan des dossiers ; suivi des exports ; capture vidéo ; OCR ; retouche photo avancée ; calques multiples ; versionnage permanent ; capture en rafale ; **sélection multiple et actions de masse** ; multimoniteur avancé ; cloud ; serveur ; multiutilisateur.
 
 L’application fonctionne **localement**, avec **une seule instance active**. Le bon fonctionnement se juge d’abord à la **fluidité d’usage et à la conservation correcte des données**, pas à la sophistication de l’infrastructure.
 
@@ -31,6 +31,8 @@ L’application fonctionne **localement**, avec **une seule instance active**. L
 | V-004 | **Zone rectangulaire par défaut au lancement** | Au démarrage, la commande de capture propose d’abord ce mode ; fenêtre et écran entier restent disponibles |
 
 Le nettoyage technique **silencieux** des orphelins au lancement n’est **pas** une suppression volontaire : V-001 ne s’applique pas à ce nettoyage.
+
+**Référence graphique officielle :** [ma-capture-prototype.html](../graphisme/ma-capture-prototype.html), les six [PNG](../graphisme/guide-des-ecrans-ma-capture.md) dont **`03-editeur-popup.png`**, et le guide de ce même dossier. Le HTML est **un prototype**, non un moteur de capture Windows à recopier. La conception 001–005 prime pour les fonctions et les contraintes.
 
 ## 2. Convention des exigences
 
@@ -157,7 +159,20 @@ Les tables catalogue prévues sont **Captures, Categories, Tags, CaptureTags**. 
 
 Les sauvegardes/restaurations sont **manuelles**. Pas de sauvegardes planifiées, de réplication, de cloud ou de mécanismes de transaction interbases introduits pour ce seul besoin.
 
-## 10. Reprise des scénarios UX-01 à UX-14
+## 9 bis. Exigences — Références graphiques, raccourci et Favoris
+
+| ID | Exigence [VALIDÉ] | Critère d'acceptation | Contrôle |
+|---|---|---|---|
+| EX-61 | Splash sans action et bandeau automatique | Splash sans bouton de continuation ; à la fin des contrôles réels il disparaît et le bandeau compact apparaît, sans délai artificiel | A+M |
+| EX-62 | Raccourci global `Ctrl + Alt + C` | Même lorsque Ma Capture n'a pas le focus, affiche le bandeau de l'instance unique, sans lancer immédiatement de capture ni remplacer `Win + Maj + S` ; si indisponible, erreur gérée sans bloquer le lancement | A+M |
+| EX-63 | Favori persistant par capture | Actionner l'étoile modifie un booléen 0/1 de `Captures` ; l'état persiste après réouverture | A+M |
+| EX-64 | Favoris cohérents en mosaïque et liste | Le même état d'étoile et le même filtre **Favoris** fonctionnent dans les deux vues ; modifier le favori ne duplique aucune capture | A+M |
+| EX-65 | Popups applicatifs cohérents graphiquement | Les confirmations, récupérations et messages applicatifs respectent le style de `03-editeur-popup.png`, avec les boutons et conséquences définis en 002/004 ; les sélecteurs natifs de fichiers restent autorisés | M |
+| EX-66 | Aucune sélection multiple en V0 | Pas de cases à cocher de traitement en masse ni d'action groupée ; les étoiles Favoris restent des actions unitaires | A+M |
+
+**[VALIDÉ]** Les six PNG et le HTML décrivent des **états d'interface** : ne pas traiter les jeux de données de démonstration, les boutons techniques du simulateur ou son JavaScript comme des exigences fonctionnelles additionnelles.
+
+## 10. Reprise des scénarios UX-01 à UX-17
 
 Les cas existants du [document 002](002-parcours-utilisateurs-et-ergonomie.md) sont conservés comme références de recette ; le tableau indique où les vérifier dans les exigences de ce document.
 
@@ -177,6 +192,9 @@ Les cas existants du [document 002](002-parcours-utilisateurs-et-ergonomie.md) s
 | UX-12 — Export PNG annoté | EX-27 à EX-29, EX-31 |
 | UX-13 — Copie sortante vers le presse-papiers | EX-30, EX-32 |
 | UX-14 — Zoom sans décalage des annotations | EX-16 |
+| UX-15 — Favoris identiques dans les deux vues | EX-63 à EX-64 |
+| UX-16 — Raccourci global sans capture immédiate | EX-62 |
+| UX-17 — Popup cohérente avec la référence | EX-65 |
 
 **Ajouts explicitement décidés après la rédaction du 002 :** confirmation de suppression, export de l’état **non enregistré**, miniature **annotée**, capture **rectangulaire par défaut**. Ils sont testés via V-001 à V-004 et les exigences associées.
 
@@ -203,7 +221,7 @@ Les scénarios du [document 004](004-integrite-sauvegardes-et-cas-limites.md) re
 
 ## 12. Tests complémentaires indispensables à la V0
 
-Les **28 scénarios de départ** ne couvrent pas, à eux seuls, les quatre dernières décisions ; on ajoute donc quelques recettes **ciblées**, sans en faire une deuxième usine à tests.
+Les **28 scénarios UX/INT initiaux**, complétés ensuite par UX-15 à UX-17, ne couvrent pas seuls l'ensemble des choix graphiques : on ajoute des recettes **ciblées**, sans en faire une deuxième usine à tests.
 
 | Cas | Action | Résultat à constater |
 |---|---|---|
@@ -217,18 +235,23 @@ Les **28 scénarios de départ** ne couvrent pas, à eux seuls, les quatre derni
 | REC-08 | Refaire la suppression puis **Confirmer** | Capture, BLOB et liens supprimés |
 | REC-09 | Démarrer avec une image orpheline correspondant au provisoire | Image protégée ; proposition de récupération |
 | REC-10 | Démarrer avec orphelins sans provisoire | Nettoyage silencieux sans dialogue de diagnostic |
+| REC-11 | Démarrer l'application normalement | Splash sans bouton, puis bandeau compact en haut automatiquement |
+| REC-12 | Dans une autre application, utiliser `Ctrl + Alt + C` | Bandeau affiché, pas de capture déclenchée ni de deuxième instance |
+| REC-13 | Marquer Favori en mosaïque, puis passer en liste, relancer | Étoile et filtre Favoris identiques ; statut conservé |
+| REC-14 | Déclencher « Ne pas enregistrer », suppression et reprise | Popups conformes à G-03P ; actions métier exactes ; aucun dialogue brut incohérent |
+| REC-15 | Consulter la bibliothèque liste | Aucun sélecteur multiple ni action en masse en V0 |
 
 ## 13. Critères de réception d’une V0
 
 La V0 peut être considérée comme **fonctionnellement recevable** lorsque :
 
-1. Tous les **EX-01 à EX-60** applicables sont satisfaits, sans écart critique connu.
-2. Les **UX-01 à UX-14** du document 002 et les **INT-01 à INT-14** du document 004 sont vérifiés, avec résultat constaté.
-3. Les **REC-01 à REC-10** ci-dessus sont vérifiés, en particulier les quatre décisions V-001 à V-004.
+1. Tous les **EX-01 à EX-66** applicables sont satisfaits, sans écart critique connu.
+2. Les **UX-01 à UX-17** du document 002 et les **INT-01 à INT-14** du document 004 sont vérifiés, avec résultat constaté.
+3. Les **REC-01 à REC-15** ci-dessus sont vérifiés, en particulier les quatre décisions V-001 à V-004.
 4. Les images originales restent intactes lors de la modification d’annotations ; les exports reflètent l’état visible, sans créer d’archivage implicite.
 5. Le provisoire n’est jamais supprimé avant validation de `Captures` ou abandon explicite ; les tests d’interruption confirment la récupération prévue.
 6. Une sauvegarde ZIP et une restauration réussies sont effectivement testées avec les **deux bases**.
-7. Une **recette visuelle réelle sur Windows** confirme l’ergonomie et l’absence de boutons/dialogues inutiles, y compris dans l’éditeur.
+7. Une **recette visuelle réelle sur Windows** confronte l'application au **HTML et aux six PNG de référence**, notamment le splash, le bandeau, l'éditeur, les deux bibliothèques et le style des popups.
 8. L’application ne contient aucune fonctionnalité hors périmètre introduite sans validation préalable.
 
 Aucun **nombre minimal arbitraire** de tests unitaires n’est fixé : les tests automatisés doivent couvrir les comportements déterministes et la recette humaine doit vérifier ce qu’un test de données ne peut pas démontrer.
@@ -246,10 +269,10 @@ Les futures missions pourront fournir leurs comptes rendus de tests, captures d�
 
 Les documents précédents mentionnent des sujets qui ne sont **pas** des décisions fermes. Ils restent ouverts et ne doivent pas être comblés silencieusement par une mission :
 
-- Identité visuelle finale, placement au pixel près, dimensions de fenêtre et de barre d’outils.
-- Choix d’un éventuel raccourci **global** de capture (distinct de `Ctrl + S`) et des raccourcis d’export/copie.
+- Adaptation de la **maquette graphique validée** aux tailles de fenêtres et résolutions, sans changement de son identité visuelle.
+- Détails techniques de déclaration du raccourci global **`Ctrl + Alt + C`** ; la combinaison est **déjà fixée**, les raccourcis d'export/copie ne le sont pas.
 - Dimensions et encodage exacts des miniatures ; comportement précis sur de très grandes bibliothèques.
-- Détail des menus de gestion de catégories/tags et éventuel filtre « À classer ».
+- Détails des menus de gestion de catégories/tags ; le filtre **« À classer » est déjà validé**.
 - Temporisation exacte de la sauvegarde automatique du JSON de récupération.
 - Paramètres d’affichage des poignées d’annotation et taille de l’historique **en mémoire**.
 - Choix final de la bibliothèque graphique, avec Python + PySide6 comme **orientation**, non comme contrainte technique démontrée.
@@ -268,6 +291,6 @@ Le dossier de conception comprend désormais :
 
 **Relecture transversale effectuée :** voir le [registre des points ouverts](relecture-transversale-et-points-ouverts.md). Les anciennes formulations contradictoires des documents 001 à 004 ont été harmonisées ; aucun développement n'a été lancé.
 
-**Rappel :** publier ce document **n’est pas** lancer une mission, créer du code, figer la maquette ou accepter une version de l’application.
+**Rappel :** publier ce document **n’est pas** lancer une mission ni accepter une version native de l'application. La maquette HTML et les PNG sont désormais des **références graphiques validées**, pas des fonctionnalités supplémentaires.
 
 **Principe final :** *une petite application bien définie, une recette utile et pas de centrale de la NASA.*
