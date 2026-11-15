@@ -4,7 +4,7 @@
 |---|---|
 | Projet | **Ma Capture** |
 | Nature | Document de conception fonctionnelle et ergonomique |
-| Version du document | **0.2 — harmonisation transversale** |
+| Version du document | **0.3 — alignement avec la maquette HTML** |
 | Date | **14 novembre 2026** |
 | Statut | **Cadrage** — décisions validées, précisions techniques différées |
 | Document précédent | [001 — Vision et périmètre fonctionnel](001-vision-et-perimetre.md) |
@@ -30,6 +30,8 @@ L’application comporte **deux espaces principaux** :
 
 - **Éditeur / capture** : création, visualisation, annotation, documentation et enregistrement.
 - **Bibliothèque** : consultation des captures archivées, recherche, filtres, reclassement et ouverture dans l’éditeur.
+
+**[VALIDÉ]** À l'ouverture : **splash** de contrôle silencieux puis **bandeau flottant compact** en haut et au centre, logo commun, commandes Plein écran / Rectangle / Fenêtre / Bibliothèque / croix de fermeture sans texte. Après capture : **éditeur**. Le prototype [HTML](../graphisme/ma-capture-prototype.html) et le [guide graphique](../graphisme/guide-des-ecrans-ma-capture.md) documentent le rendu réel attendu.
 
 La navigation doit rester évidente, sans multiplication de fenêtres. Le panneau documentaire reste intégré à l’éditeur. Les dialogues modaux sont réservés aux actions qui le justifient, principalement celles pouvant entraîner la perte d’un travail non enregistré.
 
@@ -73,7 +75,7 @@ La V0 propose :
 
 L’utilisateur choisit le mode depuis une commande de capture simple. La **gestion multimoniteur avancée** n’est pas une priorité de V0.
 
-**[VALIDÉ]** La **zone rectangulaire est présélectionnée au lancement**. **[À PRÉCISER]** Survol des fenêtres et éventuel raccourci global de déclenchement. Aucun mécanisme de capture en rafale n’est demandé.
+**[VALIDÉ]** La **zone rectangulaire est présélectionnée au lancement**. Le raccourci global **`Ctrl + Alt + C`** affiche le bandeau sans capturer immédiatement et sans remplacer `Win + Maj + S` ; la configuration du raccourci est reportée en V2. **[À PRÉCISER]** Survol exact des fenêtres. Aucun mécanisme de capture en rafale n’est demandé.
 
 ### 3.2 Arrivée dans l’éditeur [VALIDÉ]
 
@@ -252,6 +254,7 @@ Deux présentations de la **même collection locale** :
 - **Liste** : captures sous forme tabulaire, avec colonnes utiles (titre, date, catégorie notamment).
 
 L’utilisateur peut :
+- **marquer ou retirer un Favori** avec une étoile, en mosaïque comme en liste, et filtrer les **Favoris** depuis la navigation ;
 - rechercher dans les **titres, descriptions et commentaires documentaires** ;
 - rechercher/filtrer par **catégorie** et **tags** ;
 - trier par **date** ou **titre** ;
@@ -260,7 +263,7 @@ L’utilisateur peut :
 
 L’édition d’une capture archivée rouvre **le même écran**, sans second éditeur spécialisé.
 
-**[VALIDÉ]** Les miniatures affichent **le dernier état enregistré avec annotations** et la suppression volontaire d'une capture demande **confirmation**. **[À PRÉCISER]** Colonnes définitives, recherche multi-termes, filtres multiples, mémorisation de la vue et éventuel filtre « À classer ». Ces détails ne doivent pas provoquer la création d’un gestionnaire universel d’images.
+**[VALIDÉ]** Les miniatures affichent **le dernier état enregistré avec annotations**, les **Favoris** sont accessibles dans les deux vues et la suppression volontaire d'une capture demande **confirmation**. **Aucune sélection multiple en V0** : d'éventuelles cases dans de vieilles images sont une erreur de maquette, pas un besoin. **[À PRÉCISER]** Colonnes définitives, recherche multi-termes, filtres multiples, mémorisation de la vue et éventuel filtre « À classer ». Ces détails ne doivent pas provoquer la création d’un gestionnaire universel d’images.
 
 ### 9.2 Travail en cours lors de la navigation
 
@@ -296,7 +299,7 @@ Une commande **Copier l’image annotée** place le rendu dans le presse-papiers
 | Rétablir une édition | **Ctrl + Y** | **[VALIDÉ]** |
 | Supprimer l’annotation sélectionnée | **Suppr** | **[VALIDÉ]** |
 | Zoom | **Molette** | **[VALIDÉ]** |
-| Capturer (raccourci global) | Non défini | **[À PRÉCISER]** |
+| Faire apparaître le bandeau (global) | **Ctrl + Alt + C** | **[VALIDÉ]** ; sans voler le raccourci Windows |
 | Exporter / Copier | Non définis | **[À PRÉCISER]** |
 
 La gestion du **focus clavier** est essentielle : notamment, la touche Suppr ne doit jamais effacer une capture lorsque le curseur est dans un champ texte ; Ctrl + Z doit être cohérent selon que l’on édite un champ ou un objet graphique.
@@ -319,6 +322,9 @@ La gestion du **focus clavier** est essentielle : notamment, la touche Suppr ne 
 | UX-12 | Exporter un PNG annoté | Image aplatie disponible ; aucun suivi du fichier par l’application |
 | UX-13 | Copier l’image annotée | Rendu disponible dans le presse-papiers ; aucune entrée créée par collage dans l’application |
 | UX-14 | Modifier le zoom d’une capture annotée | Contours et textes restent positionnés sur leurs zones |
+| UX-15 | Marquer un favori en mosaïque puis le retrouver en liste | Même état favori, filtre Favoris cohérent |
+| UX-16 | Appeler le raccourci global hors de Ma Capture | Le bandeau réapparaît sans lancer de nouvelle instance ni capture automatique |
+| UX-17 | Afficher confirmation ou récupération | Popup de style cohérent avec `03-editeur-popup.png` et boutons métier corrects |
 
 Les conditions de test précises, erreurs et critères quantifiables seront développés dans le **document 005**.
 
@@ -338,11 +344,14 @@ Les conditions de test précises, erreurs et critères quantifiables seront dév
 | U-010 | Bibliothèque en mosaïque **et** liste, recherche, tri et filtres |
 | U-011 | Export PNG/JPEG sans suivi ; copie **sortante** de l’image annotée |
 | U-012 | Pas d’import, de collage entrant, de scan du disque ni de capture en rafale |
+| U-013 | Favoris par étoile dans les deux vues ; sélection multiple reportée |
+| U-014 | `Ctrl + Alt + C` appelle le bandeau ; personnalisation du raccourci reportée à V2 |
+| U-015 | Popups applicatifs au style du PNG `03-editeur-popup.png` ; dialogues de fichiers Windows natifs possibles |
 
 ## 14. Décisions consolidées et points d'ergonomie encore ouverts
 
 Les documents [003](003-architecture-et-modele-de-donnees.md), [004](004-integrite-sauvegardes-et-cas-limites.md) et [005](005-exigences-et-criteres-de-validation.md) ont ensuite fixé : deux bases indépendantes, provisoire PNG/JSON, absence de versionnage permanent, miniatures annotées, suppression avec confirmation et export de l'état visible non enregistré.
 
-Les détails non tranchés (raccourci global de capture, gestion pratique des catégories et tags, éventuel filtre « À classer », choix graphiques) sont consignés dans le [registre de relecture transversale](relecture-transversale-et-points-ouverts.md).
+Le raccourci global, les Favoris et le filtre **À classer** sont désormais décidés. Les détails résiduels de réalisation sont consignés dans le [registre de relecture transversale](relecture-transversale-et-points-ouverts.md). **La cible graphique est le HTML**, avec les six PNG dont la popup, et non les anciennes maquettes.
 
 **Rappel :** aucune mission Codex n’est déclenchée par la publication de ce document. La conception et ses arbitrages restent prioritaires.
