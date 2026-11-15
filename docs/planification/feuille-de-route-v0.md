@@ -6,7 +6,7 @@
 | Nature | **Planification** ; ni cahier des charges supplémentaire ni ordre de développement |
 | Version | **0.1** |
 | Date | **15 novembre 2026** |
-| Statut | **Proposition structurée à valider**, aucune mission rédigée ou lancée |
+| Statut | **Feuille de route prévisionnelle** ; MC-001 est rédigée pour relecture, aucune mission lancée |
 | Horizon | Première version utilisable localement sous Windows (**V0**) |
 | Références | [Conception 001–005](../conception/005-exigences-et-criteres-de-validation.md) · [guide graphique](../graphisme/guide-des-ecrans-ma-capture.md) · [prototype HTML](../graphisme/ma-capture-prototype.html) |
 
@@ -231,4 +231,4 @@ Après retour de Codex : **relecture du rapport → recette réelle → acceptat
 
 ## 10. Prochaine action
 
-**Rédiger soigneusement MC-001**, dans un document distinct, en détaillant le socle natif, les composants graphiques à partager, le rôle du splash tant que le stockage n'existe pas et la recette réelle sur Windows. **Faire valider ce document avant d'ouvrir la cage à Codex.**
+**Relire et valider [MC-001 — Socle Windows et identité graphique](../../missions/MC-001-socle-windows-et-identite-graphique.md)** avant toute exécution par Codex. Le document existe comme **brouillon** ; sa publication ne lance pas la mission.
