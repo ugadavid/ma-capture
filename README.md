@@ -14,7 +14,7 @@ Application Windows locale dédiée à la **capture d’écran**, à son **annot
 
 ## Planification prévisionnelle
 
-[Feuille de route V0 — MC-001 à MC-014](docs/planification/feuille-de-route-v0.md) : 14 missions proposées en quatre lots, dépendances, recettes attendues et possibilité d'intercaler des corrections. **Plan non exécutoire** : aucune mission Codex n'est encore rédigée ni lancée ; chaque mission fera l'objet d'une validation distincte.
+[Feuille de route V0 — MC-001 à MC-014](docs/planification/feuille-de-route-v0.md) : 14 missions proposées en quatre lots, dépendances, recettes attendues et possibilité d'intercaler des corrections. **Plan non exécutoire** : [MC-001 — Socle Windows et identité graphique](missions/MC-001-socle-windows-et-identite-graphique.md) est **rédigée pour relecture**, mais aucune mission Codex n'est lancée ; chaque mission fera l'objet d'une validation distincte.
 
 ## Référence graphique et interactive
 
