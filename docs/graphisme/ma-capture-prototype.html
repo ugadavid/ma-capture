@@ -1,0 +1,504 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ma Capture — prototype 0.6</title></head><body style="margin:0;background:#f2f3fa">
+<div id="mcv3" class="mcv3">
+<style>
+#mcv3{font-family:Segoe UI,Arial,sans-serif;color:#263248;font-size:13px;--edge:#e3e6f0;--purple:#7961d4;--soft:#f7f7fd;max-width:1200px;margin:12px auto}#mcv3 *{box-sizing:border-box}#mcv3 [hidden]{display:none!important}#mcv3 button,#mcv3 input,#mcv3 textarea,#mcv3 select{font:inherit}#mcv3 button{cursor:pointer;border:0}#mcv3 .topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 13px;background:#fff;border:1px solid var(--edge);border-radius:14px 14px 0 0;flex-wrap:wrap}#mcv3 .brand{font-weight:800;color:#464275;display:flex;gap:7px;align-items:center}#mcv3 .brandicon{display:grid;place-items:center;background:linear-gradient(135deg,#43c4d2,#426fdc);color:white;width:25px;height:25px;border-radius:7px}#mcv3 .tabs{display:flex;gap:3px;flex-wrap:wrap}#mcv3 .tabs button{padding:8px 11px;border-radius:9px;color:#727b90;background:transparent}#mcv3 .tabs button.active{background:#eae5fc;color:#6650b6;font-weight:750}#mcv3 .viewport{position:relative;min-height:565px;border:1px solid var(--edge);border-top:0;border-radius:0 0 14px 14px;overflow:hidden;background:#f9faff}#mcv3 .page{min-height:565px}#mcv3 .desktop{height:565px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 25%,#a6d9ff 0%,transparent 42%),linear-gradient(145deg,#bad8f5,#8dbefa 54%,#2668ce)}#mcv3 .desktop:before,#mcv3 .desktop:after{content:"";position:absolute;border-radius:50%;border:50px solid #ffffff20;transform:rotate(-23deg);width:950px;height:490px;pointer-events:none}#mcv3 .desktop:before{left:-240px;top:180px}#mcv3 .desktop:after{right:-300px;top:-230px;border-color:#e5f7ff4e}
+#mcv3 .splashCard{z-index:2;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(485px,94%);padding:28px 32px 25px;border-radius:16px;background:linear-gradient(145deg,#343d47,#222a34);color:#fafbff;box-shadow:0 23px 65px #132a5350;border:1px solid #646f7b}#mcv3 .splashTop{display:flex;align-items:center;gap:19px}#mcv3 .splashLogo{width:72px;height:72px;border-radius:17px;background:linear-gradient(140deg,#55c9f2,#2867d6);display:grid;place-items:center;flex-shrink:0}#mcv3 .splashTitle{padding-left:19px;border-left:1px solid #67737e}#mcv3 .splashTitle strong{font-size:31px;letter-spacing:-1px}#mcv3 .splashTitle span{font-size:19px;color:#b9c1ce;display:block;margin-top:5px}#mcv3 .splashRule{border-top:1px solid #5a6672;margin:23px 0 19px}#mcv3 .step{display:flex;align-items:center;gap:14px;font-size:15px;color:#bac2ce;margin:13px 0}#mcv3 .step .dot{width:22px;height:22px;border:2px solid #74808e;border-radius:50%;display:grid;place-items:center;flex-shrink:0;font-size:13px}#mcv3 .step.done .dot{background:#55b76c;border-color:#55b76c;color:white}#mcv3 .step.working{font-weight:750;color:white}#mcv3 .step.working .dot{border-color:#69a4f5;border-top-color:transparent;animation:mcspin .65s linear infinite}@keyframes mcspin{to{transform:rotate(360deg)}}#mcv3 .progress{height:11px;background:#4c5a6b;border-radius:12px;overflow:hidden;margin-top:30px}#mcv3 .progress>div{height:100%;width:5%;border-radius:12px;background:#75aaf6;transition:width .3s}#mcv3 .progresslabels{display:flex;justify-content:space-between;margin-top:9px;font-size:15px}#mcv3 .splashNote{color:#c2cad6;font-size:12px;margin-top:25px;display:flex;gap:8px;align-items:center}#mcv3 .infoDot{width:18px;height:18px;display:grid;place-items:center;border:1px solid #a9b5c3;border-radius:50%;flex-shrink:0}
+#mcv3 .floatBar{z-index:2;position:absolute;top:16px;left:50%;transform:translateX(-50%);max-width:97%;display:flex;gap:4px;align-items:center;padding:8px;border:1px solid #dae1ef;background:#fafcffed;border-radius:21px;box-shadow:0 16px 38px #1a468b48}#mcv3 .floatBrand{white-space:nowrap;padding:0 11px;color:#284a88;font-size:16px;font-weight:800}#mcv3 .floatBar button{background:transparent;border-radius:11px;min-width:76px;padding:8px 7px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;color:#46526b}#mcv3 .floatBar button b{font-size:21px;font-weight:500;line-height:22px}#mcv3 .floatBar button.active{background:#e2edff;color:#1966ce}#mcv3 .floatBar button:hover{background:#eaf1fe}#mcv3 .separator{height:35px;width:1px;background:#d8dfec;flex-shrink:0}#mcv3 .floatingHint{z-index:2;position:absolute;bottom:23px;left:50%;transform:translateX(-50%);background:#ffffffeb;box-shadow:0 7px 30px #2149852c;border-radius:12px;padding:12px 16px;max-width:90%;text-align:center;color:#56647a;font-size:12px}
+#mcv3 .screenHead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:13px 16px;background:#fff;border-bottom:1px solid var(--edge)}#mcv3 .screenHead strong{font-size:18px}#mcv3 .muted{font-size:11px;color:#7d879b}#mcv3 .actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}#mcv3 .btn{padding:9px 12px;border-radius:9px;color:#60587c;background:#f0eefb;font-weight:650}#mcv3 .btn.primary{color:#fff;background:#7961d4}#mcv3 .btn.outline{background:#fff;border:1px solid #dfe1ec}#mcv3 .btn.sm{font-size:12px;padding:7px 9px}#mcv3 .btn:hover{filter:brightness(.97)}
+#mcv3 .editorBody{min-height:492px;display:flex;background:#fafbff}#mcv3 .tools{width:52px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;border-right:1px solid var(--edge);background:#fff;padding:12px 5px}#mcv3 .tools button{width:39px;height:37px;border-radius:10px;background:#f6f5fb;color:#617088;font-size:20px}#mcv3 .tools button.active{background:#e9e3fd;color:#624ac0}#mcv3 .workspace{min-width:0;flex:1;display:flex;flex-direction:column}#mcv3 .toolOptions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:8px 10px;background:#fff;border-bottom:1px solid var(--edge)}#mcv3 .swatch{height:21px;width:21px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #d0d4e1;padding:0}#mcv3 .swatch.active{box-shadow:0 0 0 2px #8b78e1}#mcv3 .canvasFrame{flex:1;overflow:auto;min-height:302px;background-color:#eef0f8;background-image:radial-gradient(#c6cddd 1px,transparent 1px);background-size:17px 17px;display:flex;justify-content:center;align-items:flex-start;padding:20px}#mcv3 #drawing{display:block;box-shadow:0 9px 28px #3c4d7650;touch-action:none;background:white}#mcv3 .editorBottom{display:flex;justify-content:space-between;align-items:center;gap:7px;flex-wrap:wrap;background:#fff;border-top:1px solid var(--edge);padding:9px 11px}#mcv3 .docPanel{width:242px;flex-shrink:0;background:white;border-left:1px solid var(--edge);display:flex;flex-direction:column;gap:10px;padding:14px}#mcv3 .field{display:flex;flex-direction:column;gap:4px}#mcv3 .field label{font-size:11px;font-weight:750;color:#758096}#mcv3 .field input,#mcv3 .field textarea,#mcv3 .field select,#mcv3 .search{width:100%;min-width:0;padding:8px;border-radius:9px;border:1px solid #dfe2ef;background:#fcfcff;color:#293a55}#mcv3 .field textarea{resize:vertical;min-height:53px}#mcv3 .field input:read-only{background:#f2f3f8;color:#8a90a0}
+#mcv3 .libraryBody{display:flex;min-height:490px}#mcv3 .side{width:166px;flex-shrink:0;background:white;border-right:1px solid var(--edge);padding:13px 9px}#mcv3 .side button{display:block;text-align:left;width:100%;padding:10px;border-radius:9px;background:transparent;color:#68738a}#mcv3 .side button.active{background:#eee8fd;color:#6750b6;font-weight:750}#mcv3 .side h4{font-size:10px;color:#949eac;margin:17px 10px 6px}#mcv3 .libraryMain{flex:1;min-width:0;padding:16px}#mcv3 .libraryControls{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}#mcv3 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}#mcv3 .card{background:#fff;border:1px solid #e3e5ef;border-radius:12px;overflow:hidden}#mcv3 .card canvas{display:block;width:100%;aspect-ratio:8/5;background:#ecedf7;cursor:pointer}#mcv3 .cardBody{padding:9px}#mcv3 .cardBody strong{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:12px;cursor:pointer}#mcv3 .fav{color:#aeb5c6;background:transparent;font-size:19px}#mcv3 .fav.on{color:#e3a52b}#mcv3 .chip{display:inline-block;font-size:10px;padding:3px 6px;border-radius:5px;background:#eeeafd;color:#765bbb;margin-right:4px;margin-top:4px}#mcv3 table{width:100%;border-collapse:collapse;font-size:12px;background:#fff}#mcv3 th{text-align:left;background:#f6f4fc;padding:10px;color:#6d7890;font-size:11px}#mcv3 td{padding:9px;border-bottom:1px solid #eceef5}#mcv3 tr:hover td{background:#f8f6ff}#mcv3 .dialogBack{position:absolute;inset:0;background:#14234288;display:grid;place-items:center;z-index:8;padding:15px}#mcv3 .dialog{background:white;width:min(440px,95%);padding:23px;border-radius:16px;box-shadow:0 20px 60px #1e2d5550}#mcv3 .dialog h3{margin:0 0 8px}#mcv3 .dialog p{color:#6d7890;line-height:1.5}#mcv3 .toast{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:#263a5b;color:white;padding:9px 14px;border-radius:10px;display:none;z-index:12}#mcv3 .toast.show{display:block}
+@media(max-width:800px){#mcv3 .docPanel{width:200px}#mcv3 .side{width:128px}#mcv3 .floatBrand{display:none}#mcv3 .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#mcv3 .editorBody{flex-wrap:wrap}#mcv3 .docPanel{width:100%;border-left:0;border-top:1px solid var(--edge)}#mcv3 .libraryBody{display:block}#mcv3 .side{width:100%;display:flex;flex-wrap:wrap}#mcv3 .side button{width:auto}#mcv3 .side h4{display:none}#mcv3 .floatBar{gap:1px}#mcv3 .floatBar button{min-width:50px;padding:7px 3px;font-size:10px}#mcv3 .floatBar button b{font-size:18px}#mcv3 .splashCard{padding:19px}#mcv3 .splashTitle strong{font-size:25px}#mcv3 .splashLogo{width:55px;height:55px}}
+
+/* === V0.4 — Bandeau compact fidèle à la maquette validée === */
+#mcv3 .floatBar{
+  top:10px;left:50%;transform:translateX(-50%);max-width:calc(100% - 22px);
+  width:max-content;min-height:64px;gap:5px;padding:5px 8px;
+  border:1px solid #d5dfec;border-radius:17px;
+  background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(244,248,254,.97));
+  box-shadow:0 13px 29px rgba(15,61,129,.25), inset 0 1px 1px rgba(255,255,255,.85);
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+}
+#mcv3 .floatBrand{display:flex;align-items:center;gap:8px;white-space:nowrap;
+  padding:0 8px 0 1px;color:#254981;font-size:13px;font-weight:800;letter-spacing:-.15px}
+#mcv3 .floatBrandLogo{width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  display:grid;place-items:center;background:linear-gradient(140deg,#55c9f2,#2867d6);
+  box-shadow:inset 0 1px 2px #ffffff66,0 1px 3px #4877b742}
+#mcv3 .floatBrandLogo svg{width:28px;height:28px;display:block}
+#mcv3 .brandicon svg{width:19px;height:19px;display:block}
+#mcv3 .floatBar .separator{height:32px;margin:0 2px;background:#d7e0eb}
+#mcv3 .floatBar button.floatAction{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  min-width:58px;height:50px;padding:5px 7px;border:1px solid #d9e1ec;
+  border-radius:11px;background:linear-gradient(180deg,#fff 0%,#f5f8fc 100%);
+  box-shadow:inset 0 1px 0 #fff,0 1px 1px #a4b2ca17;
+  color:#475467;font-size:10px;font-weight:570;line-height:1.15;
+  transition:background .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+#mcv3 .floatBar button.floatAction .floatIcon{display:grid;place-items:center;height:24px}
+#mcv3 .floatBar button.floatAction .floatIcon svg{width:21px;height:21px;display:block}
+#mcv3 .floatBar button.floatAction .floatLabel{white-space:nowrap}
+#mcv3 .floatBar button.floatAction:hover{background:linear-gradient(180deg,#fff,#eaf3ff);border-color:#accbe9}
+#mcv3 .floatBar button.floatAction.active{color:#1566cc;border-color:#7ab2f5;
+  background:linear-gradient(180deg,#e9f4ff,#d6e9ff);
+  box-shadow:inset 0 1px 0 #ffffffc9,0 0 0 1px #6ba9f529}
+#mcv3 .floatBar button.floatAction.libraryAction{min-width:72px;color:#166e55}
+#mcv3 .floatBar button.floatAction.libraryAction:hover{background:linear-gradient(180deg,#f8fffd,#e7f8f0);border-color:#9bdbbb}
+#mcv3 .floatBar button.floatAction.closeAction{min-width:32px;width:32px;height:38px;padding:6px;border:0;
+  background:transparent;color:#5b6677;box-shadow:none}
+#mcv3 .floatBar button.floatAction.closeAction svg{height:19px;width:19px}
+#mcv3 .floatBar button.floatAction.closeAction:hover{background:#fcebec;color:#ad3c4a}
+#mcv3 .floatBar button.floatAction:focus-visible{outline:2px solid #4599ec;outline-offset:2px}
+#mcv3 .floatingHint{display:none}
+@media(max-width:800px){#mcv3 .floatBrand{display:flex;font-size:12px}}
+@media(max-width:600px){#mcv3 .floatBar{gap:3px;padding:4px;min-height:58px}
+ #mcv3 .floatBrand{padding-right:3px;gap:4px;font-size:11px}
+ #mcv3 .floatBrandLogo{width:30px;height:30px;border-radius:8px}
+ #mcv3 .floatBrandLogo svg{width:24px;height:24px}
+ #mcv3 .floatBar button.floatAction{min-width:47px;height:45px;padding:3px 4px;font-size:9px;gap:2px}
+ #mcv3 .floatBar button.floatAction.libraryAction{min-width:60px}
+ #mcv3 .floatBar button.floatAction.closeAction{min-width:28px;width:28px}
+ #mcv3 .floatBar button.floatAction .floatIcon svg{width:17px;height:17px}
+ #mcv3 .floatBar .separator{height:28px;margin:0 1px}}
+@media(max-width:430px){#mcv3 .floatBrand span:not(.floatBrandLogo){display:none}}
+
+/* === V0.5 — Éditeur : disposition calquée sur la maquette de référence === */
+#mcv3 .page[data-page="editor"]{min-height:726px;background:#f5f6fc;display:flex;flex-direction:column}
+#mcv3 .mc-edAppHead{min-height:74px;background:linear-gradient(180deg,#fff,#fafafe);border-bottom:1px solid #dce0ef;display:flex;align-items:stretch;gap:0;box-shadow:0 2px 5px #2e437211}
+#mcv3 .mc-edAppBrand{display:flex;align-items:center;gap:10px;padding:8px 16px 8px 12px;border-right:1px solid #e4e6f0;white-space:nowrap;min-width:188px}
+#mcv3 .mc-edAppBrand strong{font-size:19px;letter-spacing:-.55px;color:#20355c;font-weight:800}
+#mcv3 .mc-edLogo{display:grid;place-items:center;width:47px;height:47px;flex-shrink:0;border-radius:12px;background:linear-gradient(140deg,#55c9f2,#2867d6);box-shadow:inset 0 1px 2px #ffffff66}
+#mcv3 .mc-edLogo svg{width:37px;height:37px;display:block}
+#mcv3 .mc-edAppTabs{display:flex;align-items:stretch;gap:4px;padding:5px 10px;border-right:1px solid #e4e6f0}
+#mcv3 .mc-edAppTab{min-width:98px;border-radius:13px;background:transparent;color:#30415a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:680;padding:6px 9px}
+#mcv3 .mc-edAppTab svg{width:22px;height:22px}
+#mcv3 .mc-edAppTab.active{background:linear-gradient(170deg,#f0eaff,#e8deff);color:#6039c5;border:1px solid #a98cf7;box-shadow:0 1px 3px #734edc1d}
+#mcv3 .mc-edAppTab:hover:not(.active){background:#f2f2fa}
+#mcv3 .mc-edFileMeta{padding:8px 12px 8px 19px;display:flex;flex:1;min-width:0;flex-direction:column;justify-content:center;gap:4px}
+#mcv3 .mc-edFileMeta strong{font-size:17px;color:#24304b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mcv3 .mc-edFileMeta span{font-size:12px;color:#788499}
+#mcv3 .mc-edHeadTools{display:flex;align-items:center;gap:7px;padding:0 13px}
+#mcv3 .mc-edHeadTools button{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:transparent;color:#50627e}
+#mcv3 .mc-edHeadTools button:hover{background:#e9ecf6}
+#mcv3 .mc-edHeadTools .mc-edClose:hover{background:#ffe7e9;color:#bb4358}
+#mcv3 .mc-edMain{display:flex;flex:1;min-height:575px;min-width:0;padding:11px 9px 9px;gap:8px}
+#mcv3 .mc-edLeft,#mcv3 .mc-edCenter,#mcv3 .mc-edRight{border:1px solid #e1e3f0;border-radius:15px;background:#fff;box-shadow:0 3px 14px #5e6a8f12;min-height:0}
+#mcv3 .mc-edLeft{width:153px;flex:0 0 153px;padding:12px 10px 11px;display:flex;flex-direction:column;gap:0}
+#mcv3 .mc-edTools{display:flex;flex-direction:column;gap:3px}
+#mcv3 .mc-edTool{width:100%;height:43px;display:flex;align-items:center;gap:11px;padding:0 11px;border-radius:10px;background:transparent;color:#27364f;font-size:13px;font-weight:580;text-align:left}
+#mcv3 .mc-edTool svg{width:19px;height:19px;flex-shrink:0}
+#mcv3 .mc-edTool.active{background:#e7dcfe;color:#5632b2;font-weight:750}
+#mcv3 .mc-edTool:hover:not(.active){background:#f4f2fc}
+#mcv3 .mc-edStyling{border-top:1px solid #edf0f7;margin-top:11px;padding:13px 7px 11px;display:flex;flex-direction:column;gap:7px}
+#mcv3 .mc-edStyleLabel{font-size:11px;font-weight:720;color:#43516a}
+#mcv3 .mc-edPalette{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:2px 0 10px}
+#mcv3 button.mc-edSwatch{width:18px;height:18px;border:2px solid #fff;border-radius:6px;box-shadow:0 0 0 1px #d6d9e8;flex-shrink:0}
+#mcv3 button.mc-edSwatch.active{box-shadow:0 0 0 2px #8770d7}
+#mcv3 .mc-edStyling select{background:#fbfcff;border:1px solid #d6ddec;border-radius:9px;padding:8px;color:#3c4b66}
+#mcv3 .mc-edHistory{margin-top:auto;display:flex;gap:7px;justify-content:space-evenly;border-top:1px solid #edf0f7;padding-top:12px}
+#mcv3 .mc-edHistory button{width:42px;height:34px;display:grid;place-items:center;border-radius:9px;background:#f7f6fd;color:#6b5cb0}
+#mcv3 .mc-edHistory button:hover{background:#ece6fd}
+#mcv3 .mc-edCenter{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+#mcv3 .mc-edCenterToolbar{min-height:62px;display:flex;align-items:center;gap:9px;padding:9px 11px;background:linear-gradient(180deg,#fff,#fbfbff);border-bottom:1px solid #e5e8f1}
+#mcv3 .mc-edZoomGroup,#mcv3 .mc-edEditGroup{display:flex;align-items:center;gap:5px}
+#mcv3 button.mc-edMiniIcon{width:36px;height:36px;display:grid;place-items:center;background:#f9f9fe;border:1px solid #e2e5f0;border-radius:10px;color:#364d71}
+#mcv3 button.mc-edMiniIcon:hover{background:#ece7fc;color:#6646b9}
+#mcv3 .mc-edZoomLabel{padding:8px 8px;font-size:12px;font-weight:740;color:#34445f;min-width:60px;text-align:center;border:1px solid #e2e5f0;border-radius:9px}
+#mcv3 .mc-edToolbarSpacer{flex:1}
+#mcv3 .mc-edImageArea{padding:12px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:auto;background:#f0f2f9;background-image:none}
+#mcv3 .mc-edImageArea #drawing{width:100%;min-width:220px;box-shadow:0 3px 14px #32446325;border-radius:3px;max-width:100%}
+#mcv3 .mc-edRight{flex:0 0 340px;width:340px;padding:12px;display:flex;flex-direction:column;gap:0;overflow:auto}
+#mcv3 .mc-edDocTabs{display:flex;gap:4px;border:1px solid #dfe2ef;border-radius:11px;background:#f6f6fb;padding:3px;margin-bottom:19px;min-height:46px}
+#mcv3 .mc-edDocTabs button{flex:1;padding:7px 6px;background:transparent;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:6px;color:#3e4d67;font-size:12px;font-weight:720}
+#mcv3 .mc-edDocTabs button.active{background:#ece5ff;border:1px solid #a586f5;color:#613ac5;box-shadow:0 1px 3px #553abd10}
+#mcv3 .mc-edDocTabs svg{width:17px;height:17px}
+#mcv3 .mc-edDocBody{display:flex;flex-direction:column;gap:14px}
+#mcv3 .mc-edDocBody[hidden]{display:none}
+#mcv3 .mc-edRight .field{gap:6px}
+#mcv3 .mc-edRight .field label{font-size:12px;font-weight:730;color:#36435a}
+#mcv3 .mc-edRight .field input,#mcv3 .mc-edRight .field select,#mcv3 .mc-edRight .field textarea{padding:10px 11px;border:1px solid #d4ddec;border-radius:10px;background:#fcfdff;color:#29364d;font-size:12px}
+#mcv3 .mc-edRight .field textarea{min-height:69px}
+#mcv3 .mc-edTagBox{border:1px solid #d4ddec;border-radius:10px;padding:7px;background:#fcfdff}
+#mcv3 .mc-edTagBox input{border:0!important;background:transparent!important;padding:6px 4px!important;min-width:0}
+#mcv3 .mc-edTagPreview{display:flex;align-items:center;flex-wrap:wrap;gap:5px}
+#mcv3 .mc-edTagChip{display:inline-flex;border-radius:6px;background:#eee7ff;color:#6549b9;padding:5px 8px;font-weight:650;font-size:11px}
+#mcv3 .mc-edInfoIntro{font-weight:750;font-size:13px;color:#3c4663}
+#mcv3 .mc-edInfoRow{display:flex;justify-content:space-between;gap:9px;padding:9px 0;border-bottom:1px solid #eceef5;color:#718099;font-size:12px}
+#mcv3 .mc-edInfoRow strong{color:#35415b;text-align:right}
+#mcv3 .mc-edFooter{background:linear-gradient(180deg,#fff,#fbfbff);display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:69px;padding:10px 15px;border-top:1px solid #e2e5ef;flex-wrap:wrap}
+#mcv3 .mc-edFooterState{font-size:12px;color:#5f6b82;display:flex;align-items:center;gap:8px}
+#mcv3 .mc-edFooterState::before{content:'▧';font-size:20px;color:#4a5e88}
+#mcv3 .mc-edFooterActions{display:flex;align-items:center;gap:8px}
+#mcv3 .mc-edFooterBtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #d5dbeb;background:#fff;border-radius:11px;min-height:40px;padding:8px 12px;color:#3d4966;font-size:12px;font-weight:750;white-space:nowrap}
+#mcv3 .mc-edFooterBtn:hover{background:#f2f1fb}
+#mcv3 .mc-edFooterBtn svg{width:18px;height:18px}
+#mcv3 button.mc-edSave{background:#f1eaff;border:1.5px solid #9c76f1;color:#6240c5;box-shadow:0 1px 3px #7e66d61d}
+#mcv3 button.mc-edSave:hover{background:#e8dcff}
+#mcv3 .mc-edSave small{font-size:10px;font-weight:600}
+#mcv3 .mc-edExportMenu{position:relative}
+#mcv3 .mc-edExportMenu summary{list-style:none;cursor:pointer}
+#mcv3 .mc-edExportMenu summary::-webkit-details-marker{display:none}
+#mcv3 .mc-edChevron{font-size:18px;margin-left:3px}
+#mcv3 .mc-edExportPanel{position:absolute;right:0;bottom:calc(100% + 6px);z-index:7;width:180px;background:#fff;border:1px solid #dfe2ed;box-shadow:0 9px 24px #3d426a2b;border-radius:11px;padding:6px;display:flex;flex-direction:column;gap:2px}
+#mcv3 .mc-edExportPanel button{background:transparent;text-align:left;padding:9px;border-radius:7px;color:#4a5771;font-size:12px}
+#mcv3 .mc-edExportPanel button:hover{background:#ede8fc;color:#6748b3}
+#mcv3 .mc-edFooterBtn:focus-visible,#mcv3 .mc-edAppTab:focus-visible,#mcv3 .mc-edTool:focus-visible{outline:2px solid #9578e7;outline-offset:2px}
+@media(max-width:1050px){#mcv3 .mc-edLeft{flex-basis:125px;width:125px}#mcv3 .mc-edRight{flex-basis:290px;width:290px}#mcv3 .mc-edAppBrand{min-width:161px}#mcv3 .mc-edAppBrand strong{font-size:16px}#mcv3 .mc-edAppTab{min-width:75px}}
+@media(max-width:760px){#mcv3 .mc-edRight{flex-basis:228px;width:228px}#mcv3 .mc-edLeft{flex-basis:57px;width:57px;padding:9px 6px}#mcv3 .mc-edTool{justify-content:center;padding:0}#mcv3 .mc-edTool span{display:none}#mcv3 .mc-edStyling{padding-left:2px;padding-right:2px}#mcv3 .mc-edPalette{justify-content:center}#mcv3 .mc-edAppBrand{min-width:125px;padding:6px}#mcv3 .mc-edAppBrand strong{font-size:13px}#mcv3 .mc-edLogo{width:37px;height:37px}#mcv3 .mc-edLogo svg{width:28px;height:28px}#mcv3 .mc-edAppTabs{padding:5px}#mcv3 .mc-edAppTab{min-width:60px;font-size:11px}#mcv3 .mc-edFileMeta strong{font-size:12px}#mcv3 .mc-edMain{gap:5px;padding:6px}}
+@media(max-width:550px){#mcv3 .mc-edAppHead{flex-wrap:wrap}#mcv3 .mc-edFileMeta{order:3;flex-basis:100%;padding:7px 12px;background:#fafafe;border-top:1px solid #ececf6}#mcv3 .mc-edHeadTools{margin-left:auto}#mcv3 .mc-edMain{flex-wrap:wrap}#mcv3 .mc-edLeft{flex-basis:55px;width:55px}#mcv3 .mc-edCenter{min-width:calc(100% - 65px)}#mcv3 .mc-edRight{flex-basis:100%;width:100%;min-height:270px}#mcv3 .mc-edImageArea{min-height:265px}#mcv3 .mc-edFooterActions{gap:4px}#mcv3 .mc-edFooterBtn{padding:7px 8px}#mcv3 .mc-edSave small{display:none}}
+
+/* === V0.6 Bibliothèque : maquettes Mosaïque + Liste === */
+#mcv3 .page[data-page="library"]{min-height:730px;display:flex;flex-direction:column;background:#f7f8fd}
+#mcv3 .mc-libAppHead{height:74px;flex-shrink:0;display:flex;align-items:stretch;background:linear-gradient(180deg,#fff,#fcfcff);border-bottom:1px solid #dce1ee;box-shadow:0 2px 5px #4050760b}
+#mcv3 .mc-libAppBrand{min-width:188px;border-right:1px solid #e6e8f0;display:flex;align-items:center;gap:10px;padding:7px 12px}
+#mcv3 .mc-libAppBrand strong{color:#20355c;font-size:19px;white-space:nowrap;letter-spacing:-.5px}
+#mcv3 .mc-libLogo{width:47px;height:47px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;background:linear-gradient(140deg,#55c9f2,#2867d6);box-shadow:inset 0 1px 2px #ffffff66}
+#mcv3 .mc-libLogo svg{width:37px;height:37px}
+#mcv3 .mc-libAppTabs{display:flex;align-items:stretch;gap:4px;padding:5px 10px;border-right:1px solid #e6e8f0}
+#mcv3 .mc-libAppTab{min-width:98px;padding:6px 10px;background:transparent;color:#33435f;font-size:12px;font-weight:700;border-radius:13px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px}
+#mcv3 .mc-libAppTab svg{width:22px;height:22px}
+#mcv3 .mc-libAppTab.active{color:#633fc7;background:linear-gradient(155deg,#f0eaff,#e9ddff);border:1px solid #a589f5;box-shadow:0 2px 4px #694bc61b}
+#mcv3 .mc-libAppTab:hover:not(.active){background:#f2f0fa}
+#mcv3 .mc-libFileMeta{display:flex;flex-direction:column;justify-content:center;gap:5px;min-width:0;flex:1;padding:7px 18px}
+#mcv3 .mc-libFileMeta strong{font-size:16px;font-weight:800;white-space:nowrap;color:#25304e}
+#mcv3 .mc-libFileMeta small{font-size:11px;color:#8a90a4}
+#mcv3 .mc-libHeadTools{display:flex;gap:8px;align-items:center;padding-right:15px}
+#mcv3 .mc-libHeadTools button{width:33px;height:33px;border-radius:9px;display:grid;place-items:center;color:#465470;background:transparent}
+#mcv3 .mc-libHeadTools button:hover{background:#efecfa;color:#654ac5}
+#mcv3 .mc-libLayout{display:flex;flex:1;min-height:560px}
+#mcv3 .mc-libSidebar{flex:0 0 194px;width:194px;background:linear-gradient(180deg,#fff,#fbfbff);border-right:1px solid #e1e3ee;padding:12px 9px 16px;display:flex;flex-direction:column;gap:6px}
+#mcv3 .mc-libNavigation{display:flex;flex-direction:column;gap:4px}
+#mcv3 .mc-libSideBtn{display:flex;align-items:center;gap:9px;min-height:38px;width:100%;text-align:left;padding:8px 9px;border-radius:9px;color:#465471;background:transparent;font-size:12px;font-weight:600;white-space:nowrap}
+#mcv3 .mc-libSideBtn svg{color:#64718f;flex-shrink:0}
+#mcv3 .mc-libSideBtn span:nth-child(2){flex:1}
+#mcv3 .mc-libSideBtn.active{background:#ede7ff;color:#5638b9;box-shadow:inset 0 0 0 1px #e9defc}
+#mcv3 .mc-libSideBtn.active svg{color:#603bd3}
+#mcv3 .mc-libSideBtn:hover:not(.active){background:#f2f0fa}
+#mcv3 .mc-libCount{border-radius:8px;padding:2px 6px;color:#6f7692;background:#e9ebf6;font-size:10px;font-weight:800}
+#mcv3 .mc-libSideBtn.active .mc-libCount{background:#dcd2ff;color:#653ccb}
+#mcv3 .mc-libCategoriesTop{border-top:1px solid #e7e9f2;margin-top:7px;padding:14px 7px 4px;display:flex;justify-content:space-between;align-items:center;gap:7px}
+#mcv3 .mc-libCategoriesTop strong{font-size:11px;letter-spacing:.035em;color:#334160}
+#mcv3 .mc-libCategoriesTop button{width:25px;height:25px;color:#5f50a5;border:1px solid #dfe1ef;border-radius:8px;background:#fff;display:grid;place-items:center}
+#mcv3 .mc-libCategoriesTop button:hover{background:#ede8fe}
+#mcv3 .mc-libCategoryList{display:flex;flex-direction:column;gap:3px;max-height:320px;overflow:auto;padding:1px 0}
+#mcv3 .mc-libCategory{background:transparent;display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:9px;min-width:0;text-align:left;color:#53617e;font-size:11.5px}
+#mcv3 .mc-libCategory:hover{background:#f1eefb}
+#mcv3 .mc-libCategory.active{background:#ede7ff;color:#603ec3;font-weight:750}
+#mcv3 .mc-libCategory .label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mcv3 .mc-libCategory .mc-libCount{background:#edf0f7;color:#7a8195}
+#mcv3 .mc-libAsideFoot{font-size:10px;color:#9da3b1;line-height:1.4;margin-top:auto;padding:12px 9px;display:flex;gap:7px;align-items:start;border-top:1px solid #ebedf5}
+#mcv3 .mc-libAsideFoot svg{width:14px;height:14px;flex-shrink:0}
+#mcv3 .mc-libContent{flex:1;min-width:0;padding:13px 15px 18px;overflow:auto}
+#mcv3 .mc-libControls{display:flex;align-items:center;gap:10px;flex-wrap:nowrap;padding:0 1px 7px}
+#mcv3 .mc-libViewSwitch{display:flex;align-items:center;gap:2px;background:#fafaff;border:1px solid #dce0ed;border-radius:11px;padding:3px;flex-shrink:0}
+#mcv3 .mc-libViewSwitch button{background:transparent;color:#475672;padding:8px 9px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:9px;font-size:12px;font-weight:700}
+#mcv3 .mc-libViewSwitch button.active{background:linear-gradient(155deg,#f0eaff,#e7dcff);color:#5b37c0;box-shadow:0 1px 3px #6956b130}
+#mcv3 .mc-libViewSwitch button:hover:not(.active){background:#f1eef9}
+#mcv3 .mc-libSearchWrap{display:flex;align-items:center;gap:7px;border:1px solid #d8deec;border-radius:10px;background:#fff;min-width:130px;flex:1;padding:0 10px;height:40px}
+#mcv3 .mc-libSearchWrap svg{color:#78849b;flex-shrink:0}
+#mcv3 .mc-libSearchWrap #libSearch{border:0;background:transparent;min-width:0;flex:1;width:100%;height:38px;padding:5px 0;font-size:12px;outline:none;color:#34435a}
+#mcv3 .mc-libSearchWrap:focus-within{border-color:#ad9ce8;box-shadow:0 0 0 2px #dfd4ff77}
+#mcv3 .mc-libSelectWrap{height:40px;display:flex;align-items:center;gap:4px;white-space:nowrap;border:1px solid #d8deec;border-radius:10px;background:white;padding:0 7px;color:#69718b;flex-shrink:0}
+#mcv3 .mc-libSelectWrap select{border:0;background:transparent;color:#4d5a78;outline:0;font-size:11px;font-weight:680;max-width:126px;padding:5px 0;appearance:none;cursor:pointer}
+#mcv3 .mc-libSelectWrap>svg:last-child{opacity:.65}
+#mcv3 .mc-libSort select{max-width:117px}
+#mcv3 .mc-libResultCaption{display:flex;align-items:center;justify-content:space-between;color:#9499ad;min-height:25px;font-size:11px;padding:3px 2px 7px}
+#mcv3 .mc-libResults{min-height:320px}
+#mcv3 .mc-libGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:start}
+#mcv3 .mc-libCard{min-width:0;background:linear-gradient(180deg,#fff,#fcfbff);border:1px solid #e2e5f0;border-radius:13px;box-shadow:0 3px 11px #35466e12;overflow:hidden;transition:transform .15s,box-shadow .15s,border-color .15s}
+#mcv3 .mc-libCard:hover{transform:translateY(-2px);border-color:#bcb0ec;box-shadow:0 8px 18px #53529a24}
+#mcv3 .mc-libCardCanvas{width:100%;display:block;aspect-ratio:2.13/1;cursor:pointer;background:#edf0f6}
+#mcv3 .mc-libCardBody{padding:9px 10px 11px;display:flex;flex-direction:column;gap:5px;min-height:92px}
+#mcv3 .mc-libCardTitle{font-size:12px;font-weight:800;color:#28334d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+#mcv3 .mc-libCardMeta{display:flex;align-items:center;justify-content:space-between;gap:5px}
+#mcv3 .mc-libDate{font-size:10.5px;color:#9298af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mcv3 .mc-libFav{background:transparent;color:#96a1b9;width:30px;height:28px;display:grid;place-items:center;border-radius:7px;flex-shrink:0}
+#mcv3 .mc-libFav.active{color:#efac27}
+#mcv3 .mc-libFav.active svg{fill:#efb531;stroke:#eda416}
+#mcv3 .mc-libFav:hover{background:#f3effd}
+#mcv3 .mc-libPills{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+#mcv3 .mc-libPill{font-size:10px;padding:4px 6px;border-radius:6px;background:#ede8ff;color:#664bb0;font-weight:700;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+#mcv3 .mc-libPill.tag{background:#e8f3ff;color:#386fb7}
+#mcv3 .mc-libPill.uncategorized{background:#f0f2f7;color:#7e889b}
+#mcv3 .mc-libTableWrap{overflow:auto;border-radius:12px;border:1px solid #e5e8f1;box-shadow:0 3px 11px #3d47720a}
+#mcv3 table.mc-libTable{min-width:860px;width:100%;border-collapse:collapse;font-size:11px;color:#3b4762;background:#fff}
+#mcv3 .mc-libTable th{white-space:nowrap;color:#53617e;font-size:11px;font-weight:800;padding:12px 9px;background:#f6f5fb;border-bottom:1px solid #e4e6f1;text-align:left}
+#mcv3 .mc-libTable td{padding:7px 9px;border-bottom:1px solid #eceef5;vertical-align:middle;max-width:220px}
+#mcv3 .mc-libTable tr:last-child td{border-bottom:0}
+#mcv3 .mc-libTable tbody tr:hover td{background:#f7f3ff}
+#mcv3 .mc-libTable .mc-libRowPreview{width:67px;height:43px;display:block;border-radius:5px;cursor:pointer;border:1px solid #dce2ed}
+#mcv3 .mc-libTable .mc-libRowTitle{color:#2e3a54;font-weight:780;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+#mcv3 .mc-libTable .mc-libPills{flex-wrap:nowrap;max-width:190px;overflow:hidden}
+#mcv3 .mc-libTable .mc-libPill{font-size:10px}
+#mcv3 .mc-libCategoryCell{display:flex;align-items:center;gap:7px;white-space:nowrap}
+#mcv3 .mc-libCategoryCell svg{color:#7b65d5;flex-shrink:0}
+#mcv3 .mc-libTable .mc-libFav{margin:auto}
+#mcv3 .mc-libRowMenu{position:relative}
+#mcv3 .mc-libRowMenu summary{list-style:none;cursor:pointer;border-radius:7px;padding:6px;color:#75809a;display:grid;place-items:center}
+#mcv3 .mc-libRowMenu summary::-webkit-details-marker{display:none}
+#mcv3 .mc-libRowMenu summary:hover{background:#f1edfc;color:#654ab6}
+#mcv3 .mc-libRowMenu[open] .mc-libRowActions{position:absolute;z-index:3;right:0;top:calc(100% + 2px);background:#fff;border:1px solid #dde1ed;border-radius:9px;box-shadow:0 8px 22px #28395827;padding:5px;min-width:125px}
+#mcv3 .mc-libRowActions button{width:100%;display:flex;align-items:center;gap:7px;text-align:left;padding:8px 9px;color:#45546c;background:transparent;font-size:11px;border-radius:6px}
+#mcv3 .mc-libRowActions button:hover{background:#ede8fc}
+#mcv3 .mc-libNoResults{background:#fff;border:1px dashed #dce0eb;border-radius:12px;padding:65px 20px;text-align:center;color:#8893a6;font-size:12px}
+#mcv3 .mc-libFooter{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(180deg,#fff,#fafaff);border-top:1px solid #e0e4f0;min-height:61px;padding:10px 16px;color:#959aac;font-size:11px}
+#mcv3 .mc-libNewCapture{display:flex;align-items:center;gap:7px;border:1px solid #d7c9f5;background:#efe9ff;color:#6347bc;font-size:12px;font-weight:780;padding:9px 13px;border-radius:10px}
+#mcv3 .mc-libNewCapture:hover{background:#e8ddff}
+@media(max-width:1120px){#mcv3 .mc-libAppBrand{min-width:159px}#mcv3 .mc-libAppBrand strong{font-size:16px}#mcv3 .mc-libSidebar{flex:0 0 175px;width:175px}#mcv3 .mc-libGrid{grid-template-columns:repeat(4,minmax(0,1fr))}#mcv3 .mc-libAppTab{min-width:79px}#mcv3 .mc-libSelectWrap select{max-width:94px}}
+@media(max-width:930px){#mcv3 .mc-libControls{flex-wrap:wrap}#mcv3 .mc-libSearchWrap{flex:1 1 220px}#mcv3 .mc-libGrid{grid-template-columns:repeat(3,minmax(0,1fr))}#mcv3 .mc-libSidebar{flex:0 0 155px;width:155px}#mcv3 .mc-libFileMeta strong{font-size:13px}}
+@media(max-width:700px){#mcv3 .mc-libGrid{grid-template-columns:repeat(2,minmax(0,1fr))}#mcv3 .mc-libAppHead{height:auto;min-height:66px;flex-wrap:wrap}#mcv3 .mc-libAppBrand{min-width:125px;padding:6px}#mcv3 .mc-libAppBrand strong{font-size:13px}#mcv3 .mc-libLogo{width:38px;height:38px}#mcv3 .mc-libLogo svg{width:30px;height:30px}#mcv3 .mc-libAppTabs{padding:5px}#mcv3 .mc-libAppTab{min-width:59px;font-size:10px}#mcv3 .mc-libFileMeta{flex-basis:100%;order:3;border-top:1px solid #eeeef5;padding:8px 12px}#mcv3 .mc-libHeadTools{margin-left:auto}#mcv3 .mc-libSidebar{flex:0 0 120px;width:120px;padding:8px 4px}#mcv3 .mc-libSideBtn{gap:4px;padding:7px 4px;font-size:10px}#mcv3 .mc-libSideBtn svg{width:14px}#mcv3 .mc-libCategory{font-size:10px;padding:7px 4px}}
+@media(max-width:480px){#mcv3 .mc-libLayout{display:block}#mcv3 .mc-libSidebar{width:100%;flex-direction:row;align-items:center;flex-wrap:wrap;border-right:0;border-bottom:1px solid #e5e8f0}#mcv3 .mc-libNavigation{flex-direction:row;flex-wrap:wrap}#mcv3 .mc-libSideBtn{width:auto}#mcv3 .mc-libCategoriesTop,#mcv3 .mc-libCategoryList,#mcv3 .mc-libAsideFoot{display:none}#mcv3 .mc-libContent{padding:10px}#mcv3 .mc-libViewSwitch button{padding:7px}#mcv3 .mc-libGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<div class="topbar"><div class="brand"><span class="brandicon"><svg width="54" height="54" viewBox="0 0 64 64"><path d="M9 24V13Q9 9 13 9H24 M40 9H51Q55 9 55 13V24 M55 40V51Q55 55 51 55H40 M24 55H13Q9 55 9 51V40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><rect x="29" y="34" width="28" height="21" rx="5" fill="#effaff"/><circle cx="43" cy="45" r="6" fill="#2977d7"/></svg></span> Ma Capture <span style="font-size:11px;font-weight:400;color:#9299aa">Prototype 0.6</span></div><div class="tabs"><button data-view="splash">Chargement</button><button data-view="toolbar">Bandeau</button><button data-view="editor">Éditeur</button><button data-view="library">Bibliothèque</button></div></div>
+<div class="viewport">
+<section class="page" data-page="splash"><div class="desktop"><div class="splashCard"><div class="splashTop"><div class="splashLogo"><svg width="54" height="54" viewBox="0 0 64 64"><path d="M9 24V13Q9 9 13 9H24 M40 9H51Q55 9 55 13V24 M55 40V51Q55 55 51 55H40 M24 55H13Q9 55 9 51V40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><rect x="29" y="34" width="28" height="21" rx="5" fill="#effaff"/><circle cx="43" cy="45" r="6" fill="#2977d7"/></svg></div><div class="splashTitle"><strong>Ma Capture</strong><span>Trucabule</span></div></div><div class="splashRule"></div><div id="splashSteps"><div class="step"><span class="dot"></span>Ouverture du catalogue...</div><div class="step"><span class="dot"></span>Vérification des images...</div><div class="step"><span class="dot"></span>Réconciliation des références...</div><div class="step"><span class="dot"></span>Préparation de l’interface...</div></div><div class="progress"><div id="splashFill"></div></div><div class="progresslabels"><strong>Chargement en cours</strong><span id="splashPct">5 %</span></div><div class="splashNote"><span class="infoDot">i</span> Vérification des données locales au démarrage.</div></div></div></section>
+<section class="page" data-page="toolbar" hidden><div class="desktop">
+  <div class="floatBar" role="toolbar" aria-label="Ma Capture — modes de capture">
+    <span class="floatBrand"><span class="floatBrandLogo" aria-hidden="true"><svg width="54" height="54" viewBox="0 0 64 64"><path d="M9 24V13Q9 9 13 9H24 M40 9H51Q55 9 55 13V24 M55 40V51Q55 55 51 55H40 M24 55H13Q9 55 9 51V40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><rect x="29" y="34" width="28" height="21" rx="5" fill="#effaff"/><circle cx="43" cy="45" r="6" fill="#2977d7"/></svg></span><span>Ma Capture</span></span>
+    <span class="separator"></span>
+    <button class="floatAction" data-capture="full" title="Capturer le plein écran" aria-label="Plein écran"><span class="floatIcon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M8 21h8M12 18v3"/></svg></span><span class="floatLabel">Plein écran</span></button>
+    <button class="floatAction active" data-capture="rect" title="Capturer une zone rectangulaire" aria-label="Rectangle"><span class="floatIcon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" stroke-dasharray="4 3"/></svg></span><span class="floatLabel">Rectangle</span></button>
+    <button class="floatAction" data-capture="window" title="Capturer une fenêtre" aria-label="Fenêtre"><span class="floatIcon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="6.7" cy="6.5" r=".7" fill="currentColor" stroke="none"/><circle cx="9.3" cy="6.5" r=".7" fill="currentColor" stroke="none"/></svg></span><span class="floatLabel">Fenêtre</span></button>
+    <span class="separator"></span>
+    <button class="floatAction libraryAction" data-view="library" title="Ouvrir la bibliothèque" aria-label="Bibliothèque"><span class="floatIcon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="16" cy="9" r="1.7" fill="currentColor" stroke="none"/><path d="m5 17 5-5 3 3 2-2 4 4"/></svg></span><span class="floatLabel">Bibliothèque</span></button>
+    <span class="separator"></span>
+    <button class="floatAction closeAction" data-close="1" title="Fermer Ma Capture" aria-label="Fermer"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+  </div>
+</div></section>
+<section class="page" data-page="editor" hidden>
+  <header class="mc-edAppHead">
+    <div class="mc-edAppBrand"><span class="mc-edLogo"><svg width="54" height="54" viewBox="0 0 64 64"><path d="M9 24V13Q9 9 13 9H24 M40 9H51Q55 9 55 13V24 M55 40V51Q55 55 51 55H40 M24 55H13Q9 55 9 51V40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><rect x="29" y="34" width="28" height="21" rx="5" fill="#effaff"/><circle cx="43" cy="45" r="6" fill="#2977d7"/></svg></span><strong>Ma Capture</strong></div>
+    <nav class="mc-edAppTabs" aria-label="Espaces de travail">
+      <button class="mc-edAppTab active" data-view="editor"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 20 4.8-1.1L19.5 8.2a2.2 2.2 0 0 0-3.1-3.1L5.8 15.7 4 20Z"/><path d="m13.7 7.8 3.1 3.1"/></svg><span>Édition</span></button>
+      <button class="mc-edAppTab" data-view="library"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="16" cy="9" r="1.5"/><path d="m5 17 5-5 3 3 2-2 4 4"/></svg><span>Bibliothèque</span></button>
+    </nav>
+    <div class="mc-edFileMeta"><strong id="editorHeaderTitle">Capture en cours</strong><span id="editorHeaderSpecs">800 × 500 px · Démonstration</span></div>
+    <div class="mc-edHeadTools"><button class="mc-edHelp" data-action="help" aria-label="Aide de l'éditeur" title="Aide de l'éditeur"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.2 9a3 3 0 0 1 5.7 1.3c0 1.7-2.8 2.5-2.8 4M12 17h.01"/></svg></button><button class="mc-edClose" data-view="closed" title="Fermer Ma Capture" aria-label="Fermer"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button></div>
+  </header>
+  <div class="mc-edMain">
+    <aside class="mc-edLeft" aria-label="Outils d'annotation">
+      <div class="mc-edTools">
+        <button class="mc-edTool active" data-tool="select" title="Sélection"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 14 10-7 1-3 7L5 3Z"/></svg><span>Sélection</span></button>
+        <button class="mc-edTool " data-tool="rect" title="Rectangle"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke-dasharray="4 2"/></svg><span>Rectangle</span></button>
+        <button class="mc-edTool " data-tool="ellipse" title="Ellipse"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="7"/></svg><span>Ellipse</span></button>
+        <button class="mc-edTool " data-tool="arrow" title="Flèche"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10"/></svg><span>Flèche</span></button>
+        <button class="mc-edTool " data-tool="line" title="Ligne"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 19 5"/></svg><span>Ligne</span></button>
+        <button class="mc-edTool " data-tool="text" title="Texte"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M12 6v13M9 19h6"/></svg><span>Texte</span></button>
+      </div>
+      <div class="mc-edStyling">
+        <div class="mc-edStyleLabel">Couleur</div>
+        <div class="mc-edPalette"><button class="mc-edSwatch swatch active" data-color="#e34a65" style="background:#e34a65" title="Couleur #e34a65" aria-label="Couleur #e34a65"></button><button class="mc-edSwatch swatch " data-color="#7961d4" style="background:#7961d4" title="Couleur #7961d4" aria-label="Couleur #7961d4"></button><button class="mc-edSwatch swatch " data-color="#2a85d6" style="background:#2a85d6" title="Couleur #2a85d6" aria-label="Couleur #2a85d6"></button><button class="mc-edSwatch swatch " data-color="#20b6a7" style="background:#20b6a7" title="Couleur #20b6a7" aria-label="Couleur #20b6a7"></button><button class="mc-edSwatch swatch " data-color="#e3ab33" style="background:#e3ab33" title="Couleur #e3ab33" aria-label="Couleur #e3ab33"></button></div>
+        <div class="mc-edStyleLabel">Épaisseur</div>
+        <select id="lineWidth" title="Épaisseur du trait"><option value="2">2 px</option><option value="4" selected>4 px</option><option value="7">7 px</option></select>
+      </div>
+      <div class="mc-edHistory"><button data-action="undo" title="Annuler Ctrl + Z"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 14-5-5 5-5M4 9h9a7 7 0 0 1 0 14h-2"/></svg></button><button data-action="redo" title="Rétablir Ctrl + Y"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5m5 5h-9a7 7 0 0 0 0 14h2"/></svg></button></div>
+    </aside>
+    <div class="mc-edCenter workspace">
+      <div class="mc-edCenterToolbar">
+        <div class="mc-edZoomGroup">
+          <button class="mc-edMiniIcon" data-action="zoomout" title="Réduire"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.6" cy="10.6" r="6.4"/><path d="M7 10.6h7.2M15.5 15.5 21 21"/></svg></button>
+          <button class="mc-edMiniIcon" data-action="zoomin" title="Agrandir"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.6" cy="10.6" r="6.4"/><path d="M7 10.6h7.2M10.6 7v7.2M15.5 15.5 21 21"/></svg></button>
+          <span class="mc-edZoomLabel" id="zoomLabel">100 %</span>
+          <button class="mc-edMiniIcon" data-action="zoomfit" title="Adapter l'image à la fenêtre"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button>
+        </div>
+        <span class="mc-edToolbarSpacer"></span>
+        <div class="mc-edEditGroup"><button class="mc-edMiniIcon" data-action="copy" title="Copier l'image annotée"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg></button><button class="mc-edMiniIcon" data-action="undo" title="Annuler"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 14-5-5 5-5M4 9h9a7 7 0 0 1 0 14h-2"/></svg></button><button class="mc-edMiniIcon" data-action="redo" title="Rétablir"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5m5 5h-9a7 7 0 0 0 0 14h2"/></svg></button></div>
+      </div>
+      <div class="canvasFrame mc-edImageArea"><canvas id="drawing" width="800" height="500" style="width:100%;min-width:300px;aspect-ratio:8/5;cursor:crosshair" title="Surface de capture modifiable"></canvas></div>
+    </div>
+    <aside class="mc-edRight docPanel" aria-label="Panneau documentaire">
+      <div class="mc-edDocTabs"><button class="active" data-doc-tab="documentation">☷ Documentation</button><button data-doc-tab="infos"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/></svg> Infos</button></div>
+      <div class="mc-edDocBody" data-doc-pane="documentation">
+        <div class="field"><label>Titre</label><input data-field="title" placeholder="Titre de la capture"></div>
+        <div class="field"><label>Catégorie</label><select data-field="category"><option value="">Non classée</option><option>Interface</option><option>Développement</option><option>Documentation</option><option>Personnel</option></select></div>
+        <div class="field"><label>Tags</label><div class="mc-edTagBox"><div class="mc-edTagPreview" id="mcTagPreview"></div><input data-field="tags" placeholder="Ajouter des tags, séparés par des virgules"></div></div>
+        <div class="field"><label>Description</label><textarea data-field="description" placeholder="Description facultative..."></textarea></div>
+        <div class="field"><label>Commentaire</label><textarea data-field="comment" placeholder="Remarques sur cette capture..."></textarea></div>
+      </div>
+      <div class="mc-edDocBody mc-edInfoBody" data-doc-pane="infos" hidden>
+        <div class="mc-edInfoIntro">Informations sur la capture</div>
+        <div class="field"><label>Date et heure</label><input data-field="date" readonly></div>
+        <div class="mc-edInfoRow"><span>Dimensions</span><strong>800 × 500 px</strong></div>
+        <div class="mc-edInfoRow"><span>Source</span><strong>Capture simulée</strong></div>
+        <div class="mc-edInfoRow"><span>Calques</span><strong>Image + annotations</strong></div>
+        <p class="muted">L'image originale reste intacte. La bibliothèque conserve uniquement les captures enregistrées.</p>
+      </div>
+    </aside>
+  </div>
+  <footer class="mc-edFooter"><div class="mc-edFooterState" id="editorStatus">Capture non enregistrée</div><div class="mc-edFooterActions">
+    <button class="mc-edFooterBtn mc-edDelete" data-action="delete-current" title="Supprimer ou abandonner la capture"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 4h4M6 7l1 13h10l1-13M10 11v6m4-6v6"/></svg><span>Supprimer</span></button>
+    <details class="mc-edExportMenu"><summary class="mc-edFooterBtn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5"/></svg><span>Exporter</span><span class="mc-edChevron">⌄</span></summary><div class="mc-edExportPanel"><button data-action="exportpng">Exporter en PNG</button><button data-action="exportjpg">Exporter en JPEG</button><button data-action="copy">Copier l'image</button></div></details>
+    <button class="mc-edFooterBtn mc-edSave" data-action="save"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h13l3 3v13H4V4Z"/><path d="M7 4v7h10V4M7 20v-6h10v6"/></svg><span>Enregistrer <small>(Ctrl + S)</small></span></button>
+  </div></footer>
+</section>
+<section class="page" data-page="library" hidden>
+  <header class="mc-libAppHead">
+    <div class="mc-libAppBrand"><span class="mc-libLogo"><svg width="54" height="54" viewBox="0 0 64 64"><path d="M9 24V13Q9 9 13 9H24 M40 9H51Q55 9 55 13V24 M55 40V51Q55 55 51 55H40 M24 55H13Q9 55 9 51V40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><rect x="29" y="34" width="28" height="21" rx="5" fill="#effaff"/><circle cx="43" cy="45" r="6" fill="#2977d7"/></svg></span><strong>Ma Capture</strong></div>
+    <nav class="mc-libAppTabs" aria-label="Espaces de travail">
+      <button class="mc-libAppTab" data-view="editor"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4L16.5 3.5Z"/></svg><span>Édition</span></button>
+      <button class="mc-libAppTab active" data-view="library"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="16" cy="9" r="1.5"/><path d="m5 17 5-5 3 3 2-2 4 4"/></svg><span>Bibliothèque</span></button>
+    </nav>
+    <div class="mc-libFileMeta"><strong>Bibliothèque — <span id="libCount">10 captures</span></strong><small>Ma collection locale de démonstration</small></div>
+    <div class="mc-libHeadTools"><button data-action="help" title="Aide de la bibliothèque" aria-label="Aide"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 1.7-2.9 2.4-2.9 4M12 17h.01"/></svg></button><button data-view="closed" title="Fermer Ma Capture" aria-label="Fermer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5 19 19M19 5 5 19"/></svg></button></div>
+  </header>
+  <div class="mc-libLayout">
+    <aside class="mc-libSidebar" aria-label="Navigation de la bibliothèque">
+      <div class="mc-libNavigation">
+        <button class="mc-libSideBtn active" data-filter="all"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Toutes les captures</span><span class="mc-libCount" data-count="all">10</span></button>
+        <button class="mc-libSideBtn" data-filter="favorites"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2.5 3 6.4 7 1-5 4.9 1.2 7-6.2-3.3-6.2 3.3 1.2-7-5-4.9 7-1L12 2.5Z"/></svg><span>Favoris</span><span class="mc-libCount" data-count="favorites">0</span></button>
+        <button class="mc-libSideBtn" data-filter="unclassified"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="m14 4 6 6M12 12 20 4l-2-2-8 8-1 4 4-1"/></svg><span>À classer</span><span class="mc-libCount" data-count="unclassified">0</span></button>
+      </div>
+      <div class="mc-libCategoriesTop"><strong>CATÉGORIES</strong><button data-action="new-category" title="Ajouter une catégorie" aria-label="Ajouter une catégorie"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></button></div>
+      <div id="libCategories" class="mc-libCategoryList"></div>
+      <div class="mc-libAsideFoot"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg> Les catégories ne sont pas hiérarchiques.</div>
+    </aside>
+    <div class="mc-libContent">
+      <div class="mc-libControls">
+        <div class="mc-libViewSwitch" role="group" aria-label="Mode d'affichage">
+          <button class="active" data-layout="mosaic" title="Vue mosaïque"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Mosaïque</span></button>
+          <button data-layout="list" title="Vue liste"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5h13M8 12h13M8 19h13"/><path d="M3 5h.01M3 12h.01M3 19h.01"/></svg><span>Liste</span></button>
+        </div>
+        <div class="mc-libSearchWrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.2"/><path d="m16 16 5 5"/></svg><input id="libSearch" class="search" type="search" aria-label="Rechercher une capture" placeholder="Rechercher (titre, tags, commentaire...)" autocomplete="off"></div>
+        <label class="mc-libSelectWrap" title="Filtrer par tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-4L3 5Z"/></svg><select id="libTagFilter" aria-label="Filtrer par tag"><option value="all">Tous les tags</option></select><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></label>
+        <label class="mc-libSelectWrap mc-libSort" title="Trier les captures"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v18m-4-4 4 4 4-4M17 21V3m-4 4 4-4 4 4"/></svg><select id="libSort" aria-label="Trier les captures"><option value="newest">Date (récent)</option><option value="oldest">Date (ancien)</option><option value="title-az">Titre (A → Z)</option><option value="title-za">Titre (Z → A)</option></select><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></label>
+      </div>
+      <div class="mc-libResultCaption" id="resultCount" role="status"></div>
+      <div id="results" class="mc-libResults"></div>
+    </div>
+  </div>
+  <div class="mc-libFooter"><span>Bibliothèque locale · Captures réalisées dans Ma Capture uniquement</span><button class="mc-libNewCapture" data-view="toolbar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg> Nouvelle capture</button></div>
+</section>
+<section class="page" data-page="closed" hidden><div style="text-align:center;padding:110px 15px"><h3>Ma Capture fermée</h3><button class="btn primary" data-view="splash">Relancer le prototype</button></div></section>
+<div id="dialogHost"></div><div id="toast" class="toast" role="status"></div>
+</div>
+<script>
+(function(){
+const root=document.getElementById('mcv3');if(!root)return;
+const q=s=>root.querySelector(s),qa=s=>[...root.querySelectorAll(s)];
+const copy=x=>JSON.parse(JSON.stringify(x));
+const seed=[
+{id:1,title:'Mon Bureau — Commandes',date:'14/11/2026 21:10',category:'Interface',tags:['Mon Bureau','UI'],description:'Commandes rapides',comment:'',favorite:true,variant:0,annotations:[{id:50,t:'rect',x:230,y:169,w:330,h:105,color:'#e34a65',width:4}]},
+{id:2,title:'TRAME — Éditeur',date:'14/11/2026 19:32',category:'Développement',tags:['TRAME'],description:'Éditeur de texte',comment:'',favorite:false,variant:1,annotations:[{id:51,t:'arrow',x:537,y:153,w:-140,h:130,color:'#7961d4',width:4}]},
+{id:3,title:'Ma Médiathèque',date:'13/11/2026 10:20',category:'Interface',tags:['Médiathèque'],description:'Vue catalogue',comment:'',favorite:true,variant:2,annotations:[{id:52,t:'ellipse',x:260,y:170,w:275,h:100,color:'#20b6a7',width:4}]},
+{id:4,title:'Capture 2026-11-13 09-05',date:'13/11/2026 09:05',category:'',tags:[],description:'',comment:'',favorite:false,variant:0,annotations:[]},
+{id:5,title:'Chrome Organizer — Onglets',date:'12/11/2026 22:43',category:'Documentation',tags:['Chrome'],description:'',comment:'',favorite:false,variant:1,annotations:[]},
+{id:6,title:'Voyage — Glencoe',date:'11/11/2026 16:42',category:'Voyages',tags:['Écosse','Montagne'],description:'Vue de la vallée',comment:'Exemple de capture pour le prototype.',favorite:true,variant:3,annotations:[{id:53,t:'ellipse',x:335,y:250,w:285,h:95,color:'#e3ab33',width:5}]},
+{id:7,title:'Logo Trucabule',date:'11/11/2026 14:23',category:'Projets',tags:['Trucabule'],description:'Maquette de marque',comment:'',favorite:false,variant:4,annotations:[]},
+{id:8,title:'Copropriété — Façade',date:'08/11/2026 09:05',category:'Documentation',tags:['Travaux'],description:'Zones à repérer sur la façade',comment:'',favorite:false,variant:5,annotations:[]},
+{id:9,title:'Architecture REPLI4C',date:'30/06/2026 16:10',category:'Projets',tags:['REPLI4C'],description:'Schéma documentaire',comment:'',favorite:false,variant:6,annotations:[{id:54,t:'rect',x:320,y:210,w:166,h:85,color:'#7961d4',width:4}]},
+{id:10,title:'Arabe A1.1 — Leçon 2',date:'05/11/2026 17:40',category:'Apprentissage',tags:['Langues'],description:'Support de cours',comment:'',favorite:false,variant:7,annotations:[]}
+];
+const db=seed.map(copy),s={view:'splash',current:null,dirty:false,tool:'select',color:'#e34a65',width:4,zoom:1,history:[],future:[],sel:null,preview:null,drag:null,libView:'mosaic',filter:'all',nextId:11,nextAnno:100,modal:null,pending:null};
+let timer=null,toastTimeout=null;
+function status(msg){q('#toast').textContent=msg;q('#toast').classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>q('#toast')?.classList.remove('show'),2400)}
+function unsaved(next){s.pending=next;s.modal='unsaved';drawDialog()}
+function go(view){clearInterval(timer);timer=null;const nav=()=>{s.view=view;qa('[data-page]').forEach(el=>{el.hidden=el.dataset.page!==view});qa('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));if(view==='editor'){if(!s.current){s.current=copy(db[0]);s.dirty=false}bindEditor()}if(view==='library')renderLibrary();if(view==='splash')animateSplash()};if(s.view==='editor'&&view!=='editor'&&s.dirty){unsaved(nav)}else nav()}
+function animateSplash(){clearInterval(timer);let n=0;const steps=qa('#splashSteps .step'),vals=[7,29,52,76,100];function tick(){steps.forEach((el,i)=>{el.classList.toggle('done',i<n);el.classList.toggle('working',i===n)});q('#splashFill').style.width=vals[Math.min(n,4)]+'%';q('#splashPct').textContent=vals[Math.min(n,4)]+' %';if(n>=4){clearInterval(timer);timer=null;setTimeout(()=>{if(s.view==='splash')go('toolbar')},250)}n++}tick();timer=setInterval(tick,380)}
+function makeCapture(variant){const action=()=>{const d=new Date(),z=n=>String(n).padStart(2,'0');s.current={id:null,title:'Capture '+d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())+' '+z(d.getHours())+'-'+z(d.getMinutes())+'-'+z(d.getSeconds()),date:d.toLocaleString('fr-FR'),category:'',tags:[],description:'',comment:'',favorite:false,variant,annotations:[]};s.dirty=true;s.history=[];s.future=[];s.sel=null;s.tool='select';go('editor');status('Capture simulée : elle est prête à être annotée.')};if(s.view==='editor'&&s.dirty)unsaved(action);else action()}
+function save(){if(!s.current)return false;let rec=copy(s.current),i=db.findIndex(x=>x.id===rec.id);if(rec.id==null){rec.id=s.nextId++;s.current.id=rec.id;db.unshift(rec)}else if(i>=0)db[i]=rec;else db.unshift(rec);s.dirty=false;updateStatus();status('Enregistré dans la bibliothèque de démonstration.');return true}
+function updateStatus(){const el=q('#editorStatus');if(el)el.textContent=s.dirty?(s.current?.id==null?'Capture non enregistrée':'Modifications non enregistrées'):'Capture enregistrée'}
+function renderTagChips(){const target=q('#mcTagPreview');if(!target||!s.current)return;target.replaceChildren();s.current.tags.forEach(t=>{const el=document.createElement('span');el.className='mc-edTagChip';el.textContent=t;target.appendChild(el)})}
+function syncFields(){if(!s.current)return;updateCategorySelect();qa('[data-field]').forEach(el=>{const key=el.dataset.field;el.value=key==='tags'?s.current.tags.join(', '):s.current[key]??''});const h=q('#editorHeaderTitle');if(h)h.textContent=s.current.title||'Capture sans titre';renderTagChips()}
+function setTool(t){s.tool=t;qa('[data-tool]').forEach(b=>b.classList.toggle('active',b.dataset.tool===t));q('#drawing').style.cursor=t==='select'?'default':'crosshair'}
+function bindEditor(){syncFields();setTool(s.tool);qa('[data-color]').forEach(b=>b.classList.toggle('active',b.dataset.color===s.color));q('#lineWidth').value=String(s.width);updateStatus();drawEditor()}
+function drawAdditionalDemoScene(ctx,v){
+ const g=(a,b,c,d)=>{const z=ctx.createLinearGradient(a,b,c,d);return z};
+ ctx.save();ctx.clearRect(0,0,800,500);
+ if(v===3){
+   let sky=g(0,0,0,500);sky.addColorStop(0,'#76c5fc');sky.addColorStop(.6,'#d5e7f7');sky.addColorStop(1,'#7fb46f');ctx.fillStyle=sky;ctx.fillRect(0,0,800,500);
+   ctx.fillStyle='#fff9ef';for(let i=0;i<7;i++){ctx.beginPath();ctx.ellipse(80+i*130,80+(i%2)*20,80,18,0,0,Math.PI*2);ctx.fill()}
+   function mountain(points,color){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);points.slice(1).forEach(x=>ctx.lineTo(...x));ctx.closePath();ctx.fill()}
+   mountain([[0,260],[160,75],[320,265],[420,180],[640,325],[800,240],[800,500],[0,500]],'#4d6480');
+   mountain([[0,312],[167,120],[320,320],[420,225],[800,340],[800,500],[0,500]],'#66837b');
+   mountain([[0,350],[230,250],[450,350],[590,260],[800,365],[800,500],[0,500]],'#7e985e');
+   mountain([[0,420],[300,325],[540,390],[800,360],[800,500],[0,500]],'#b39d55');
+   ctx.fillStyle='#cde5d9';ctx.beginPath();ctx.moveTo(470,500);ctx.bezierCurveTo(430,438,490,408,514,369);ctx.bezierCurveTo(542,342,550,326,544,309);ctx.lineTo(556,309);ctx.bezierCurveTo(570,361,500,390,493,434);ctx.lineTo(510,500);ctx.fill();
+   for(let i=0;i<47;i++){ctx.fillStyle=i%2?'#957ba9':'#87975a';ctx.beginPath();ctx.ellipse((i*131)%800,438+(i*23)%63,16+(i%5)*3,7,0,0,Math.PI*2);ctx.fill()}
+ } else if(v===4){
+   ctx.fillStyle='#fffdf8';ctx.fillRect(0,0,800,500);ctx.fillStyle='#14181f';ctx.font='900 65px Segoe UI, Arial';ctx.textAlign='center';ctx.fillText('Trucabule',400,335);
+   ctx.strokeStyle='#17191e';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(190,250);ctx.quadraticCurveTo(410,260,600,245);ctx.stroke();
+   ctx.fillStyle='#17191e';ctx.beginPath();ctx.arc(407,122,31,0,Math.PI*2);ctx.fill();ctx.lineWidth=12;ctx.beginPath();ctx.moveTo(404,165);ctx.lineTo(402,232);ctx.moveTo(400,190);ctx.lineTo(315,215);ctx.moveTo(403,189);ctx.lineTo(475,216);ctx.moveTo(402,232);ctx.lineTo(360,265);ctx.moveTo(402,232);ctx.lineTo(452,264);ctx.stroke();
+   ctx.strokeStyle='#f08035';ctx.lineWidth=15;ctx.beginPath();ctx.moveTo(389,170);ctx.quadraticCurveTo(465,148,522,168);ctx.stroke();
+ }else if(v===5){
+   ctx.fillStyle='#cfe5f6';ctx.fillRect(0,0,800,500);ctx.fillStyle='#cab89d';ctx.fillRect(70,55,655,440);ctx.fillStyle='#e5d8c3';ctx.fillRect(83,71,630,424);
+   ctx.fillStyle='#b09a7d';ctx.fillRect(70,52,655,24);ctx.fillStyle='#eee5d5';ctx.fillRect(108,80,570,397);
+   for(let row=0;row<4;row++)for(let col=0;col<7;col++){let x=121+col*79,y=103+row*87;ctx.fillStyle='#b8cadd';ctx.fillRect(x,y,54,65);ctx.fillStyle='#556274';ctx.fillRect(x+3,y+4,48,54);ctx.fillStyle='#b2c4d4';ctx.fillRect(x+7,y+7,40,46);ctx.fillStyle='#d3bda2';ctx.fillRect(x-3,y+59,60,7)}
+   ctx.strokeStyle='#8a8378';ctx.lineWidth=2;for(let row=0;row<5;row++){ctx.beginPath();ctx.moveTo(70,73+row*87);ctx.lineTo(724,73+row*87);ctx.stroke()}
+ }else if(v===6){
+   ctx.fillStyle='#f4f7ff';ctx.fillRect(0,0,800,500);
+   const nodes=[[70,180,'Corpus'],[295,80,'Analyse'],[295,292,'Annotations'],[534,180,'REPLI4C']];
+   ctx.strokeStyle='#b8a2e8';ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(255,225);ctx.lineTo(320,120);ctx.moveTo(255,225);ctx.lineTo(320,325);ctx.moveTo(492,120);ctx.lineTo(557,225);ctx.moveTo(492,325);ctx.lineTo(557,225);ctx.stroke();
+   for(let i=0;i<nodes.length;i++){const [x,y,t]=nodes[i];ctx.fillStyle=i===3?'#d1eeff':'#e8dcff';ctx.strokeStyle=i===3?'#71b7e9':'#b39bea';ctx.lineWidth=4;ctx.beginPath();ctx.roundRect(x,y,193,96,17);ctx.fill();ctx.stroke();ctx.fillStyle='#49547c';ctx.font='bold 26px Segoe UI, Arial';ctx.textAlign='center';ctx.fillText(t,x+96,y+54)}
+ }else if(v===7){
+   let sky=g(0,0,800,500);sky.addColorStop(0,'#ecf5fc');sky.addColorStop(1,'#c3e3f6');ctx.fillStyle=sky;ctx.fillRect(0,0,800,500);
+   ctx.fillStyle='#244268';ctx.textAlign='center';ctx.font='bold 95px Tahoma, Arial';ctx.fillText('العَرَبِيَّة',400,255);
+   ctx.font='bold 33px Segoe UI,Arial';ctx.fillText('Arabe A1.1 · Leçon 2',400,328);
+   ctx.fillStyle='#7b9cb4';ctx.font='22px Segoe UI,Arial';ctx.fillText('Exemple de capture de cours',400,374);
+ }else{
+   ctx.fillStyle='#232a40';ctx.fillRect(0,0,800,500);ctx.fillStyle='#303a56';ctx.fillRect(0,0,170,500);ctx.fillStyle='#d2d6ed';ctx.font='20px monospace';ctx.fillText('editor',30,47);
+   for(let i=0;i<16;i++){ctx.fillStyle=['#83d2cb','#dca5e9','#91aafa','#e4c18d'][i%4];ctx.fillRect(201+(i%3)*37,40+i*26,370-(i%5)*39,10)}
+ }
+ ctx.restore();
+}
+function scene(ctx,v){if(v>=3){drawAdditionalDemoScene(ctx,v);return}ctx.fillStyle='#e7ecf4';ctx.fillRect(0,0,800,500);ctx.fillStyle='#fff';ctx.fillRect(17,16,766,470);ctx.fillStyle=['#33475c','#333c5b','#3f596e'][v%3];ctx.fillRect(17,16,766,48);ctx.fillStyle='#f5797a';ctx.beginPath();ctx.arc(40,40,6,0,7);ctx.fill();ctx.fillStyle='#f0cb73';ctx.beginPath();ctx.arc(61,40,6,0,7);ctx.fill();ctx.fillStyle='#77c997';ctx.beginPath();ctx.arc(82,40,6,0,7);ctx.fill();ctx.font='bold 21px Segoe UI,Arial';ctx.fillStyle='white';ctx.fillText(['Mon Bureau — Atelier PowerShell','TRAME — Éditeur','Ma Médiathèque — Catalogue'][v%3],115,46);ctx.fillStyle='#dce5f1';ctx.fillRect(17,64,174,422);for(let i=0;i<7;i++){ctx.fillStyle=i===2?'#a49cdd':'#b6c4d4';ctx.fillRect(32,90+i*47,123-(i%3)*16,12)}ctx.fillStyle='#fafbfd';ctx.fillRect(191,64,592,422);ctx.fillStyle='#fff';ctx.fillRect(220,84,529,57);ctx.fillStyle='#708099';ctx.font='bold 23px Segoe UI,Arial';ctx.fillText(['Commandes rapides','Document de travail','Bibliothèque'][v%3],240,120);for(let i=0;i<3;i++){let x=222+i*175;ctx.fillStyle=['#eeeeff','#e5f8f3','#fff1e6'][i];ctx.fillRect(x,165,159,117);ctx.fillStyle=['#a39bde','#5bc6af','#e1b171'][i];ctx.fillRect(x+16,185,110,14);for(let j=0;j<3;j++){ctx.fillStyle='#c9d3df';ctx.fillRect(x+16,222+j*17,120-j*19,7)}}ctx.fillStyle='#fff';ctx.fillRect(222,308,527,149);for(let i=0;i<6;i++){ctx.fillStyle=i%2?'#d7deea':'#bcc7d6';ctx.fillRect(244,325+i*21,453-(i%3)*47,8)}}
+function anno(ctx,a,selected=false){ctx.save();ctx.strokeStyle=ctx.fillStyle=a.color||'#e34a65';ctx.lineWidth=a.width||4;ctx.lineJoin='round';ctx.lineCap='round';if(a.t==='rect')ctx.strokeRect(a.x,a.y,a.w,a.h);else if(a.t==='ellipse'){ctx.beginPath();ctx.ellipse(a.x+a.w/2,a.y+a.h/2,Math.max(1,a.w/2),Math.max(1,a.h/2),0,0,Math.PI*2);ctx.stroke()}else if(a.t==='line'||a.t==='arrow'){let ex=a.x+a.w,ey=a.y+a.h;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(ex,ey);ctx.stroke();if(a.t==='arrow'){let an=Math.atan2(a.h,a.w);ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(ex-19*Math.cos(an-.5),ey-19*Math.sin(an-.5));ctx.lineTo(ex-19*Math.cos(an+.5),ey-19*Math.sin(an+.5));ctx.closePath();ctx.fill()}}else if(a.t==='text'){ctx.font='bold 23px Segoe UI,Arial';ctx.fillText(a.text||'Commentaire',a.x,a.y)}if(selected){let b=bounds(a);ctx.strokeStyle='#8670df';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.strokeRect(b.x-6,b.y-6,b.w+12,b.h+12)}ctx.restore()}
+function bounds(a){if(a.t==='text')return{x:a.x,y:a.y-24,w:Math.max(60,(a.text||'Texte').length*13),h:30};return{x:Math.min(a.x,a.x+a.w),y:Math.min(a.y,a.y+a.h),w:Math.abs(a.w),h:Math.abs(a.h)}}
+function paint(cv,record,sel,preview){if(!cv||!record)return;const ctx=cv.getContext('2d');ctx.setTransform(cv.width/800,0,0,cv.height/500,0,0);ctx.clearRect(0,0,800,500);scene(ctx,record.variant||0);record.annotations.forEach(a=>anno(ctx,a,a.id===sel));if(preview)anno(ctx,preview)}
+function drawEditor(){paint(q('#drawing'),s.current,s.sel,s.preview)}
+function hit(p){for(const a of [...s.current.annotations].reverse()){const b=bounds(a);if(p.x>b.x-15&&p.x<b.x+b.w+15&&p.y>b.y-15&&p.y<b.y+b.h+15)return a.id}return null}
+function pos(e){const r=q('#drawing').getBoundingClientRect();return{x:800*(e.clientX-r.left)/r.width,y:500*(e.clientY-r.top)/r.height}}
+const cv=q('#drawing');cv.addEventListener('pointerdown',e=>{if(e.button!==0||s.view!=='editor'||!s.current)return;cv.setPointerCapture(e.pointerId);const p=pos(e);if(s.tool==='select'){s.sel=hit(p);if(s.sel){remember();s.drag={kind:'move',p,original:copy(s.current.annotations.find(x=>x.id===s.sel))}}else s.drag=null;drawEditor()}else if(s.tool==='text'){remember();s.current.annotations.push({id:s.nextAnno++,t:'text',x:p.x,y:p.y,text:'Commentaire',color:s.color,width:s.width});s.dirty=true;updateStatus();drawEditor()}else{remember();s.drag={kind:'draw',p};s.preview={id:-1,t:s.tool,x:p.x,y:p.y,w:0,h:0,color:s.color,width:s.width}}});
+cv.addEventListener('pointermove',e=>{if(!s.drag)return;let p=pos(e),g=s.drag;if(g.kind==='move'){let a=s.current.annotations.find(x=>x.id===s.sel);if(a){a.x=g.original.x+p.x-g.p.x;a.y=g.original.y+p.y-g.p.y}}else{let a=s.preview;if(a.t==='rect'||a.t==='ellipse'){a.x=Math.min(g.p.x,p.x);a.y=Math.min(g.p.y,p.y);a.w=Math.abs(p.x-g.p.x);a.h=Math.abs(p.y-g.p.y)}else{a.w=p.x-g.p.x;a.h=p.y-g.p.y}}drawEditor()});
+cv.addEventListener('pointerup',()=>{if(!s.drag)return;if(s.drag.kind==='draw'){if(Math.abs(s.preview.w)+Math.abs(s.preview.h)>8){s.preview.id=s.nextAnno++;s.current.annotations.push(s.preview);s.dirty=true}else s.history.pop()}else s.dirty=true;s.preview=s.drag=null;drawEditor();updateStatus()});
+function remember(){s.history.push(copy(s.current.annotations));if(s.history.length>30)s.history.shift();s.future=[]}
+function undo(){if(!s.history.length)return;s.future.push(copy(s.current.annotations));s.current.annotations=s.history.pop();s.sel=null;s.dirty=true;drawEditor();updateStatus()}
+function redo(){if(!s.future.length)return;s.history.push(copy(s.current.annotations));s.current.annotations=s.future.pop();s.sel=null;s.dirty=true;drawEditor();updateStatus()}
+function libEsc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function libDate(s){const m=String(s||'').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})[,\s]+(\d{1,2}):(\d{2})/);return m?new Date(+m[3],+m[2]-1,+m[1],+m[4],+m[5]).getTime():0}
+function libDateDisplay(s){const m=String(s||'').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})[,\s]+(\d{1,2}):(\d{2})/);if(!m)return s;const months=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];return +m[1]+' '+months[+m[2]-1]+' '+m[3]}
+const libAddedCategories=new Set();
+function libAllCategories(){return [...new Set([...db.map(a=>a.category).filter(Boolean),...libAddedCategories])].sort((a,b)=>a.localeCompare(b,'fr'))}
+function updateCategorySelect(){const el=q('[data-page="editor"] select[data-field="category"]');if(!el)return;const old=s.current?.category??'';el.innerHTML='<option value="">Non classée</option>'+libAllCategories().map(name=>'<option value="'+libEsc(name)+'">'+libEsc(name)+'</option>').join('');el.value=old}
+function renderLibCategories(){const categories=libAllCategories();q('#libCategories').innerHTML=categories.map(name=>'<button class="mc-libCategory '+(s.filter==='cat:'+name?'active':'')+'" data-filter="'+libEsc('cat:'+name)+'" title="Catégorie '+libEsc(name)+'">'+'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg>'+'<span class="label">'+libEsc(name)+'</span><span class="mc-libCount">'+db.filter(a=>a.category===name).length+'</span></button>').join('')}
+function renderLibTagOptions(){const select=q('#libTagFilter');const old=select.value;const tags=[...new Set(db.flatMap(x=>x.tags))].sort((a,b)=>a.localeCompare(b,'fr'));select.innerHTML='<option value="all">Tous les tags</option>'+tags.map(x=>'<option value="'+libEsc(x)+'">'+libEsc(x)+'</option>').join('');select.value=tags.includes(old)?old:'all'}
+function renderLibrary(){
+  const search=q('#libSearch').value.trim().toLocaleLowerCase('fr');
+  renderLibCategories();renderLibTagOptions();
+  let rows=db.filter(a=>[a.title,a.description,a.comment,a.category,...a.tags].join(' ').toLocaleLowerCase('fr').includes(search) &&
+    (s.filter==='all'||s.filter==='favorites'&&a.favorite||s.filter==='unclassified'&&!a.category||s.filter==='cat:'+a.category) &&
+    (q('#libTagFilter').value==='all'||a.tags.includes(q('#libTagFilter').value)));
+  const sort=q('#libSort').value;
+  rows.sort((a,b)=>sort==='oldest'?libDate(a.date)-libDate(b.date):sort==='title-az'?a.title.localeCompare(b.title,'fr'):sort==='title-za'?b.title.localeCompare(a.title,'fr'):libDate(b.date)-libDate(a.date));
+  q('#libCount').textContent=db.length+' captures';
+  q('#resultCount').textContent=rows.length+' résultat'+(rows.length>1?'s':'')+' · '+(s.libView==='mosaic'?'Vue mosaïque':'Vue liste')+' · Démonstration interactive';
+  qa('[data-count="all"]').forEach(x=>x.textContent=db.length);
+  qa('[data-count="favorites"]').forEach(x=>x.textContent=db.filter(a=>a.favorite).length);
+  qa('[data-count="unclassified"]').forEach(x=>x.textContent=db.filter(a=>!a.category).length);
+  qa('.mc-libNavigation [data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter===s.filter));
+  qa('[data-layout]').forEach(x=>x.classList.toggle('active',x.dataset.layout===s.libView));
+  const thumb=a=>'<canvas width="400" height="188" class="mc-libCardCanvas" data-thumb="'+a.id+'" data-edit="'+a.id+'" title="Ouvrir '+libEsc(a.title)+'"></canvas>';
+  const star=a=>'<button class="mc-libFav '+(a.favorite?'active':'')+'" data-fav="'+a.id+'" title="'+(a.favorite?'Retirer des favoris':'Ajouter aux favoris')+'" aria-label="'+(a.favorite?'Retirer des favoris':'Ajouter aux favoris')+'">'+'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2.5 3 6.4 7 1-5 4.9 1.2 7-6.2-3.3-6.2 3.3 1.2-7-5-4.9 7-1L12 2.5Z"/></svg>'+'</button>';
+  const pills=a=>'<span class="mc-libPill '+(!a.category?'uncategorized':'')+'">'+libEsc(a.category||'Non classée')+'</span>'+a.tags.slice(0,2).map(t=>'<span class="mc-libPill tag">'+libEsc(t)+'</span>').join('');
+  let html='';
+  if(s.libView==='mosaic'){
+    html='<div class="mc-libGrid">'+rows.map(a=>'<article class="mc-libCard">'+thumb(a)+'<div class="mc-libCardBody"><div class="mc-libCardTitle" data-edit="'+a.id+'" title="Ouvrir '+libEsc(a.title)+'">'+libEsc(a.title)+'</div><div class="mc-libCardMeta"><span class="mc-libDate">'+libDateDisplay(a.date)+'</span>'+star(a)+'</div><div class="mc-libPills">'+pills(a)+'</div></div></article>').join('')+'</div>';
+  }else{
+    html='<div class="mc-libTableWrap"><table class="mc-libTable"><thead><tr><th style="width:77px">Aperçu</th><th>Titre</th><th>Catégorie</th><th>Tags</th><th>Date</th><th>Dimension</th><th>Taille</th><th style="width:38px">★</th><th style="width:36px"></th></tr></thead><tbody>'+
+      rows.map(a=>'<tr><td><canvas width="128" height="80" class="mc-libRowPreview" data-thumb="'+a.id+'" data-edit="'+a.id+'"></canvas></td><td><div class="mc-libRowTitle" data-edit="'+a.id+'" title="Ouvrir '+libEsc(a.title)+'">'+libEsc(a.title)+'</div></td><td><span class="mc-libCategoryCell">'+'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg>'+' '+libEsc(a.category||'—')+'</span></td><td><span class="mc-libPills">'+a.tags.slice(0,3).map(t=>'<span class="mc-libPill tag">'+libEsc(t)+'</span>').join('')+'</span></td><td>'+libEsc(a.date)+'</td><td>800 × 500</td><td class="muted">Démo</td><td>'+star(a)+'</td><td><details class="mc-libRowMenu"><summary title="Actions pour '+libEsc(a.title)+'">'+'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>'+'</summary><div class="mc-libRowActions"><button data-edit="'+a.id+'">'+'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 16 16 8m-6 0h6v6"/></svg>'+' Ouvrir</button><button data-delete="'+a.id+'">'+'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 4h4M6 7l1 13h10l1-13M10 11v6m4-6v6"/></svg>'+' Supprimer</button></div></details></td></tr>').join('')+'</tbody></table></div>';
+  }
+  q('#results').innerHTML=rows.length?html:'<div class="mc-libNoResults">Aucune capture ne correspond à cette recherche.<br>Essaie un autre filtre ou mot-clé.</div>';
+  qa('#results canvas[data-thumb]').forEach(cv=>{const a=db.find(v=>v.id===Number(cv.dataset.thumb));if(a)paint(cv,a)});
+}
+function drawDialog(){const host=q('#dialogHost');if(!s.modal){host.innerHTML='';return}if(s.modal?.type==='category'){host.innerHTML='<div class="dialogBack"><div class="dialog"><h3>Nouvelle catégorie</h3><p>Ajoute une catégorie simple, sans hiérarchie.</p><div class="field" style="margin:12px 0"><label>Nom de la catégorie</label><input id="mc-libNewCategory" placeholder="Ex. Tutoriels" maxlength="48"></div><div class="actions" style="justify-content:flex-end"><button class="btn outline" data-dialog="cancel">Annuler</button><button class="btn primary" data-dialog="category-save">Ajouter</button></div></div></div>';return}if(s.modal==='unsaved')host.innerHTML='<div class="dialogBack"><div class="dialog"><h3>Modifications non enregistrées</h3><p>Souhaites-tu enregistrer la capture avant de poursuivre ?</p><div class="actions" style="justify-content:flex-end"><button class="btn primary" data-dialog="save">Enregistrer</button><button class="btn outline" data-dialog="discard">Ne pas enregistrer</button><button class="btn outline" data-dialog="cancel">Annuler</button></div></div></div>';else host.innerHTML='<div class="dialogBack"><div class="dialog"><h3>Supprimer cette capture ?</h3><p>Cette action retirera la capture de la bibliothèque de démonstration.</p><div class="actions" style="justify-content:flex-end"><button class="btn outline" data-dialog="cancel">Annuler</button><button class="btn primary" data-dialog="delete">Supprimer</button></div></div></div>'}
+function exportImage(type,clipboard){if(!s.current)return;const canvas=document.createElement('canvas');canvas.width=800;canvas.height=500;paint(canvas,s.current);canvas.toBlob(async blob=>{if(!blob)return;if(clipboard){try{await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);status('Image de démonstration copiée.')}catch(err){status('Le presse-papiers est restreint ici.')}}else{const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=s.current.title.replace(/[\\/:*?"<>|]/g,'_')+'.'+(type==='jpeg'?'jpg':'png');link.click();setTimeout(()=>URL.revokeObjectURL(url),3000);status('Export de démonstration déclenché.')}},type==='jpeg'?'image/jpeg':'image/png',.92)}
+root.addEventListener('click',e=>{const b=e.target.closest('button,[data-edit]');if(!b)return;if(b.dataset.dialog){const act=b.dataset.dialog;if(act==='cancel'){s.modal=null;s.pending=null;drawDialog();return}if(act==='category-save'){const val=q('#mc-libNewCategory')?.value.trim();if(!val){status('Indique un nom de catégorie.');return}if(libAllCategories().some(x=>x.toLocaleLowerCase('fr')===val.toLocaleLowerCase('fr'))){status('Cette catégorie existe déjà.');return}libAddedCategories.add(val);s.modal=null;drawDialog();renderLibrary();status('Catégorie ajoutée pour la démonstration.');return}if(act==='delete'){const deletedId=s.modal.id;db.splice(db.findIndex(x=>x.id===deletedId),1);s.modal=null;drawDialog();if(s.current?.id===deletedId){s.current=null;s.dirty=false;go('library')}else renderLibrary();return}const next=s.pending;s.modal=null;s.pending=null;drawDialog();if(act==='save')save();else s.dirty=false;if(next)next();return}if(b.dataset.docTab){qa('[data-doc-tab]').forEach(t=>t.classList.toggle('active',t.dataset.docTab===b.dataset.docTab));qa('[data-doc-pane]').forEach(t=>t.hidden=t.dataset.docPane!==b.dataset.docTab);return}
+if(b.dataset.view){go(b.dataset.view);return}if(b.dataset.close){go('closed');return}if(b.dataset.capture){makeCapture(b.dataset.capture==='full'?2:b.dataset.capture==='window'?1:0);return}if(b.dataset.tool){setTool(b.dataset.tool);return}if(b.dataset.color){s.color=b.dataset.color;qa('[data-color]').forEach(x=>x.classList.toggle('active',x.dataset.color===s.color));if(s.sel&&s.current){const obj=s.current.annotations.find(x=>x.id===s.sel);if(obj){remember();obj.color=s.color;s.dirty=true;drawEditor();updateStatus()}}return}if(b.dataset.layout){s.libView=b.dataset.layout;renderLibrary();return}if(b.dataset.filter){s.filter=b.dataset.filter;renderLibrary();return}if(b.dataset.edit){s.current=copy(db.find(x=>x.id===Number(b.dataset.edit)));s.dirty=false;s.history=[];s.future=[];s.sel=null;go('editor');return}if(b.dataset.fav){let a=db.find(x=>x.id===Number(b.dataset.fav));if(a){a.favorite=!a.favorite;renderLibrary()}return}if(b.dataset.delete){s.modal={type:'delete',id:Number(b.dataset.delete)};drawDialog();return}if(b.dataset.action==='new-category'){s.modal={type:'category'};drawDialog();return}if(b.dataset.action==='help'){status(s.view==='library'?'Filtre, recherche et ouvre tes captures. Les étoiles marquent les favoris.':'Dessine directement sur la capture ; Ctrl + S enregistre, Ctrl + Z annule.');return}
+if(b.dataset.action==='delete-current'){if(!s.current)return;if(s.current.id==null){unsaved(()=>{s.current=null;s.dirty=false;go('toolbar')})}else{s.modal={type:'delete',id:s.current.id};drawDialog()}return}
+if(b.dataset.action==='save'){save();return}if(b.dataset.action==='undo'){undo();return}if(b.dataset.action==='redo'){redo();return}if(b.dataset.action==='zoomin'||b.dataset.action==='zoomout'||b.dataset.action==='zoomfit'){s.zoom=b.dataset.action==='zoomfit'?1:Math.min(1.8,Math.max(.5,s.zoom+(b.dataset.action==='zoomin'?.2:-.2)));q('#drawing').style.width=Math.round(s.zoom*100)+'%';q('#zoomLabel').textContent=Math.round(s.zoom*100)+' %';return}if(b.dataset.action==='exportpng'){exportImage('png',false);return}if(b.dataset.action==='exportjpg'){exportImage('jpeg',false);return}if(b.dataset.action==='copy'){exportImage('png',true);return}});
+root.addEventListener('input',e=>{const el=e.target;if(el.dataset.field&&s.current&&!el.readOnly){s.current[el.dataset.field]=el.dataset.field==='tags'?el.value.split(',').map(x=>x.trim()).filter(Boolean):el.value;s.dirty=true;updateStatus();if(el.dataset.field==='title'){const title=q('#editorHeaderTitle');if(title)title.textContent=el.value||'Capture sans titre'}if(el.dataset.field==='tags')renderTagChips()}if(el.id==='libSearch')renderLibrary()});root.addEventListener('change',e=>{if(e.target.id==='lineWidth')s.width=Number(e.target.value);if(e.target.id==='libTagFilter'||e.target.id==='libSort')renderLibrary()});root.addEventListener('keydown',e=>{if(s.view!=='editor')return;const text=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName);if(e.ctrlKey&&e.key.toLowerCase()==='s'){e.preventDefault();save()}else if(!text&&e.ctrlKey&&e.key.toLowerCase()==='z'){e.preventDefault();undo()}else if(!text&&e.ctrlKey&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}else if(!text&&e.key==='Delete'&&s.sel){remember();s.current.annotations=s.current.annotations.filter(x=>x.id!==s.sel);s.sel=null;s.dirty=true;drawEditor();updateStatus()}});
+// Both splash and floating bar are static markup: no dynamic HTML render is required for them.
+qa('[data-page]').forEach(el=>el.hidden=el.dataset.page!=='splash');qa('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view==='splash'));animateSplash();
+})();
+</script>
+</div>
+</body></html>
