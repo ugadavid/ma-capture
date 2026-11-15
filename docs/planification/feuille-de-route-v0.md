@@ -216,7 +216,7 @@ Avant toute mission, rédiger un fichier de mission distinct avec :
 3. **Références à consulter** dans les 001–005, guide, HTML et PNG utiles ; les priorités entre ces sources.
 4. **Travaux demandés**, risques connus et choix laissés à Codex. Toute nouvelle décision produit remonte pour validation.
 5. **Critères de réussite** : comportement visible, tests automatisés pertinents, recette manuelle Windows.
-6. **Livrables** : code, éventuelles migrations, rapport factuel, captures si interface, commits et état Git propres.
+6. **Livrables** : code, rapport factuel, captures si interface, commits et état Git propres. **Aucune migration ni compatibilité des anciennes bases de test pendant l'alpha**, selon `AGENTS.md`.
 7. **Limites et suite** : ce qui n'a pas pu être testé, corrections requises, points devant être arbitrés par l'utilisateur.
 
 Après retour de Codex : **relecture du rapport → recette réelle → acceptation ou mission corrective → seulement ensuite mission suivante**. Codex ne s'auto-attribue pas l'acceptation finale.
