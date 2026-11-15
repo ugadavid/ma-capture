@@ -12,6 +12,10 @@ Application Windows locale dédiée à la **capture d’écran**, à son **annot
 4. [004 — Intégrité, sauvegardes et cas limites](docs/conception/004-integrite-sauvegardes-et-cas-limites.md) — fichiers provisoires, reprise après plantage, contrôle des orphelins et sauvegarde/restauration ZIP.
 5. [005 — Exigences et critères de validation](docs/conception/005-exigences-et-criteres-de-validation.md) — exigences V0, critères observables et plans de recette UX, intégrité et décisions finales.
 
+## Planification prévisionnelle
+
+[Feuille de route V0 — MC-001 à MC-014](docs/planification/feuille-de-route-v0.md) : 14 missions proposées en quatre lots, dépendances, recettes attendues et possibilité d'intercaler des corrections. **Plan non exécutoire** : aucune mission Codex n'est encore rédigée ni lancée ; chaque mission fera l'objet d'une validation distincte.
+
 ## Référence graphique et interactive
 
 **Pour reproduire l'interface dans l'application Windows native :**
