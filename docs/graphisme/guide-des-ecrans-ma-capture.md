@@ -1,34 +1,38 @@
 # Ma Capture — Guide des écrans pour Codex
 
-**Statut : projet de consignes graphiques à valider, avant toute mission de développement.**  
-**Emplacement prévu :** `docs/graphisme/guide-des-ecrans-ma-capture.md`  
+**Statut : référence graphique de conception validée ; guide harmonisé le 15 novembre 2026. Aucune mission Codex lancée.**  
+**Emplacement :** `docs/graphisme/guide-des-ecrans-ma-capture.md`  
 **Références fonctionnelles :** `docs/conception/001` à `005`, ainsi que le registre des arbitrages.  
 **Public :** équipe de réalisation / Codex, une fois les consignes approuvées.
 
 ## 0. Comment utiliser ces maquettes
 
-Les quatre fichiers PNG ci-dessous sont les **références visuelles approuvées**. Ils représentent cinq **états/écrans** : splash screen, bandeau de capture, éditeur, bibliothèque mosaïque, bibliothèque liste.
+**Référence interactive principale :** [ma-capture-prototype.html](ma-capture-prototype.html). C'est la cible graphique et ergonomique : proportions, composants, navigation et gestes. Son JavaScript simule des captures ; il **n'est pas à recopier comme moteur natif Windows**.
 
-| Référence | Fichier PNG présent dans ce dossier | Rôle |
+Les **six PNG** ci-dessous sont des prises de vue du **même prototype**, et non des maquettes graphiques concurrentes :
+
+| Réf. | Capture PNG | Usage |
 |---|---|---|
-| G-01 | [Écran de chargement Ma Capture.png](<Écran de chargement Ma Capture.png>) | Écran de démarrage et vérification |
-| G-02 | [Ma Capture sur fond bleu abstrait.png](<Ma Capture sur fond bleu abstrait.png>) | Petit bandeau flottant de capture |
-| G-03 | [Ma Capture _ annotation de Glencoe.png](<Ma Capture _ annotation de Glencoe.png>) | Éditeur / documentation |
-| G-04 | [Bibliothèque Ma Capture en deux modes.png](<Bibliothèque Ma Capture en deux modes.png>) | Vue mosaïque **en haut** et vue liste **en bas** : deux états de la **même** interface |
+| G-01 | [01-splash.png](01-splash.png) | Démarrage et chargement |
+| G-02 | [02-bandeau.png](02-bandeau.png) | Petit bandeau flottant |
+| G-03 | [03-editeur.png](03-editeur.png) | Éditeur et fiche documentaire |
+| G-03P | [03-editeur-popup.png](03-editeur-popup.png) | **Style des dialogues et popups** |
+| G-04 | [04-bibliotheque-mosaique.png](04-bibliotheque-mosaique.png) | Bibliothèque mosaïque |
+| G-05 | [05-bibliotheque-liste.png](05-bibliotheque-liste.png) | Bibliothèque liste |
 
-**Priorité des sources :** les PNG indiquent l'apparence et la disposition visuelle ; les documents de conception définissent **ce que l'application fait réellement**. Un bouton, un exemple d'image, un chiffre ou un champ dessiné par la génération graphique **n'autorise pas à créer une fonctionnalité absente du périmètre**. Les textes, dates, fichiers et nombres de captures visibles dans les maquettes sont illustratifs.
+**Hiérarchie pour Codex :** les documents [001 à 005](../conception/001-vision-et-perimetre.md) fixent **les fonctions et les données** ; le HTML fixe le **design interactif** ; les PNG sont les **états visuels vérifiables**. Si le prototype présente un contrôle de démonstration ou une interaction ne figurant pas dans les exigences, **ne pas en déduire une nouvelle fonctionnalité**. Les captures fictives, nombres, titres, dates, décors et contrôles de navigation du simulateur ne doivent pas devenir des données de production.
 
 ### Ligne graphique commune
 
 - Application Windows contemporaine, sobre et lisible ; grandes zones aérées, angles légèrement arrondis, icônes simples, contrastes suffisants.
 - Splash screen volontairement **anthracite avec accents bleus**, conformément à la maquette G-01.
-- Bandeau, éditeur et bibliothèque dans le **thème clair bleuté** visible sur G-02 à G-04, avec touches **violet doux / bleu / turquoise**. Respecter les **variations effectivement validées** entre les écrans au lieu d'en inventer une uniformisation.
+- Bandeau, éditeur et bibliothèque dans le **thème clair bleuté** visible sur G-02 à G-05, avec touches **violet doux / bleu / turquoise**. Respecter les **variations effectivement validées** entre les écrans au lieu d'en inventer une uniformisation.
 - Le fond bleu de Windows et les photographies servent à **mettre en situation** les écrans, pas à devenir un fond imposé de l'application ni des ressources à importer en bibliothèque.
 - Les dimensions de la maquette sont une **intention de proportions**, pas une obligation de calquer des pixels sur une résolution donnée.
 
 ## 1. G-01 — Splash screen / chargement
 
-![Référence G-01](<Écran de chargement Ma Capture.png>)
+![Référence G-01](01-splash.png)
 
 ### Apparence
 
@@ -49,13 +53,13 @@ Les quatre fichiers PNG ci-dessous sont les **références visuelles approuvées
 
 ## 2. G-02 — Bandeau flottant de capture
 
-![Référence G-02](<Ma Capture sur fond bleu abstrait.png>)
+![Référence G-02](02-bandeau.png)
 
 ### Apparence
 
 - **Petit bandeau horizontal**, posé **en haut et au centre de l'écran**, pas une grande fenêtre d'accueil.
-- Coins arrondis, fond clair légèrement translucide, ombre discrète, identité Ma Capture à gauche.
-- Cinq commandes lisibles : **Plein écran**, **Rectangle** (sélectionné par défaut), **Fenêtre**, **Bibliothèque**, **Fermer**.
+- Coins arrondis, fond clair légèrement translucide, ombre discrète, **logo identique au splash** à gauche. Dimensions compactes, conformes à G-02 : pas de gros panneau d'accueil.
+- Cinq commandes lisibles : **Plein écran**, **Rectangle** (sélectionné par défaut), **Fenêtre**, **Bibliothèque** et **croix seule**, sans texte « Fermer ».
 - La commande sélectionnée se distingue par un bleu doux, comme sur la maquette.
 
 ### Comportement
@@ -71,17 +75,17 @@ Les quatre fichiers PNG ci-dessous sont les **références visuelles approuvées
 ### Raccourci clavier global
 
 - Un **raccourci global distinct du `Win + Maj + S` de Windows** est souhaité pour Ma Capture, afin de laisser le choix entre les deux outils.
-- **Combinaison exacte à arrêter** après vérification des conflits ; ne pas choisir silencieusement le raccourci Windows.
+- **Combinaison V0 validée : `Ctrl + Alt + C`**, testée comme non occupée sur Zenith Ice par l'utilisateur ; la disponibilité devra être gérée au lancement. Ne pas prendre possession de `Win + Maj + S` ni écraser le raccourci d'une autre application.
 - **V2 seulement :** permettre à l'utilisateur de personnaliser ce raccourci dans les paramètres.
 - Ceci est distinct de **Ctrl + S** dans l'éditeur, qui sauvegarde la capture.
 
 ## 3. G-03 — Éditeur / annotation et documentation
 
-![Référence G-03](<Ma Capture _ annotation de Glencoe.png>)
+![Référence G-03](03-editeur.png)
 
 ### Apparence et disposition
 
-- Fenêtre principale organisée en **trois zones** : barre d'outils d'annotation à gauche ; **grande image éditable** au centre ; **fiche documentaire** à droite.
+- Fenêtre principale organisée en **trois zones** : palette d'outils **libellés** à gauche, **grande image éditable** au centre et **fiche documentaire** à droite ; logo commun au splash, au bandeau et à la bibliothèque.
 - En haut : identification Ma Capture, accès Édition/Bibliothèque, titre et quelques outils de navigation/zoom.
 - En bas : état de sauvegarde, commande d'export et **un seul bouton Enregistrer (Ctrl + S)**. Le panneau documentaire est redimensionnable.
 - Garder le style validé de la maquette : fond clair, contours fins, accent violet pour les actions sélectionnées, champs lisibles.
@@ -107,20 +111,32 @@ Les quatre fichiers PNG ci-dessous sont les **références visuelles approuvées
 - **Naviguer, demander une autre capture ou quitter avec des modifications non sauvegardées** : montrer l'image avec le dialogue **Enregistrer / Ne pas enregistrer / Annuler** ; les trois choix restent distincts.
 - **Suppression volontaire d'une capture archivée** : confirmation préalable. Ne pas confondre cette action avec « supprimer l'annotation sélectionnée ».
 
-### Éléments visibles mais NON validés comme fonctionnalités V0
+### Simulation et fonctionnalités hors V0
 
-La maquette montre aussi **Surligner**, **Crayon**, **Flou**, **Masque**, certains contrôles de recadrage, des onglets supplémentaires ainsi que des icônes d'aide/paramètres. **Ne pas les implémenter automatiquement.** La V0 n'est pas un logiciel de retouche ni d'anonymisation. Garder la qualité de la composition visuelle, mais ne proposer que les outils du cahier des charges, sauf décision ultérieure.
+Le HTML présente des **captures fictives**, des titres d'exemple et quelques commandes propres à la démonstration. Ne pas implémenter Flou, Masque, retouche photographique, recadrage complexe, calques ou import d'images. Les seules annotations V0 sont Sélection, Ligne, Flèche, Rectangle, Ellipse et Texte, avec couleur, épaisseur et édition.
 
-Le titre d'exemple « Voyage – Glencoe.jpg », l'astérisque du champ Titre et la photographie sont illustratifs : **aucun import d'image** n'est autorisé et le titre est déjà rempli, sans saisie obligatoire.
+## 3 bis. G-03P — Référence graphique des dialogues et popups
 
-## 4. G-04a — Bibliothèque : mosaïque (moitié haute)
+![Référence G-03P](03-editeur-popup.png)
 
-![Référence G-04 : mosaïque en haut, liste en bas](<Bibliothèque Ma Capture en deux modes.png>)
+**Cette capture fait référence pour le STYLE des dialogues applicatifs.** Les dialogues de confirmation, de perte potentielle et de récupération doivent appartenir à la même famille graphique que l'éditeur : bordures, arrondis, typographie, espacements, contraste, disposition et hiérarchie des boutons. **Ne pas laisser les popups applicatives dans un style Windows brut incohérent par défaut.**
+
+Les comportements demeurent ceux des documents 002/004/005 :
+- Travail non enregistré : **Enregistrer / Ne pas enregistrer / Annuler**, trois conséquences distinctes.
+- Suppression volontaire : confirmation explicite.
+- Récupération : image visible et choix sans effacement sur Annuler.
+- Erreur : message compréhensible, sans succès fictif.
+
+Le PNG G-03P ne crée **aucune nouvelle commande métier**. Les dialogues standards de choix de fichier (export ZIP, fichiers) peuvent rester natifs Windows ; c'est le style des **popups propres à Ma Capture** qui doit être reproduit.
+
+## 4. G-04 — Bibliothèque : mosaïque
+
+![Référence G-04](04-bibliotheque-mosaique.png)
 
 ### Apparence
 
 - Fenêtre Bibliothèque du même univers clair violet/bleu que l'éditeur.
-- Navigation à gauche : toutes les captures, filtre **À classer** et catégories ; le reste dépend du périmètre réellement validé.
+- Navigation à gauche : **Toutes les captures**, **Favoris**, **À classer** et catégories **simples**, sans hiérarchie artificielle.
 - Haut : bascule **Mosaïque / Liste**, champ de recherche, filtre tags, tri.
 - Corps : cartes rectangulaires avec **miniature annotée**, titre, date, catégorie éventuelle et tags affichés sans surcharge.
 
@@ -136,11 +152,11 @@ Le titre d'exemple « Voyage – Glencoe.jpg », l'astérisque du champ Titre et
 
 - Les vignettes montrent des **exemples de contenus capturés**, pas une fonction d'import de photos, PDF ou autres images.
 - Les chiffres des compteurs et exemples de catégories sont des **données fictives**.
-- Les **étoiles Favoris**, l'arborescence hiérarchique et les éventuelles fonctions de masse ne sont **pas validées** par les exigences 001–005 : ne pas les ajouter sans arbitrage.
+- Les **étoiles Favoris sont validées pour V0** (bascule unitaire, filtre accessible en mosaïque et liste). **La sélection multiple et les opérations de masse sont reportées** : toute case de sélection multiple issue d'une ancienne maquette est un défaut d'illustration.
 
-## 5. G-04b — Bibliothèque : liste (moitié basse)
+## 5. G-05 — Bibliothèque : liste
 
-*Référence : même fichier G-04, partie basse.*
+![Référence G-05](05-bibliotheque-liste.png)
 
 ### Apparence
 
@@ -153,7 +169,7 @@ Le titre d'exemple « Voyage – Glencoe.jpg », l'astérisque du champ Titre et
 - Une capture sélectionnée est la même que dans la mosaïque ; ouverture dans l'éditeur G-03.
 - Recherche et filtres partagés avec la mosaïque, sans modification des données lors du changement de vue.
 - Renommer/reclasser passe par la fiche documentaire ; la suppression volontaire passe par une **confirmation**.
-- Les cases de sélection multiple, les étoiles et menus contextuels représentés dans l'image n'impliquent **pas** automatiquement une fonction de traitement par lots : à arbitrer si besoin.
+- **Étoiles Favoris opérationnelles**, identiques à la mosaïque. **Pas de cases de sélection multiple ni d'actions de masse en V0** ; si de tels éléments apparaissent dans une image illustrative, les ignorer. Les menus par capture n'ajoutent que des actions déjà autorisées.
 
 ## 6. Parcours complet entre les écrans
 
@@ -168,7 +184,7 @@ G-01 — Splash / vérification des données
                       │                                      ├── Enregistrer → capture archivée, éditeur disponible
                       │                                      ├── Exporter / Copier → rendu de l'état visible
                       │                                      └── Modifier / reclasser → même écran
-                      ├── Bibliothèque → G-04a Mosaïque ⇄ G-04b Liste
+                      ├── Bibliothèque → G-04 Mosaïque ⇄ G-05 Liste
                       │                       └── Ouvrir capture → G-03
                       └── Fermer → Quitter
 ```
@@ -184,11 +200,14 @@ La nouvelle capture doit être accessible de manière simple après un enregistr
 5. **Vérification manuelle sur Windows** : splash court, bandeau haut centré, prise de vue qui ne capture pas le bandeau, outils d'annotation utilisables, écran de bibliothèque clair et cohérent dans les deux vues.
 6. **Pas de modification automatique de la spécification** pour « embellir » ou « enrichir » l'interface ; les désaccords entre illustration et périmètre sont remontés pour arbitrage.
 
-## 8. Derniers arbitrages utiles avant de donner ce guide à Codex
+## 8. Décisions finales et limites de réalisation
 
-- **Raccourci global de V0** : l'utilisateur veut un autre raccourci que celui de Windows ; **combinaison précise à choisir** et absence de conflit à vérifier. **Personnalisation en V2**.
-- **Favoris et sélection multiple** dessinés dans la bibliothèque : simples éléments visuels ou véritables fonctionnalités ? Aucun ajout implicite.
-- **Outils supplémentaires** dessinés dans l'éditeur (Flou, Masque, etc.) : **hors périmètre V0 sauf validation expresse**.
-- **Disposition exacte** des commandes autour de l'éditeur et gestion des panneaux sur de petites résolutions : à valider lors de la recette graphique, sans changer les parcours.
+- **Raccourci global V0 :** `Ctrl + Alt + C`, distinct de `Win + Maj + S`. En V2, rendre la combinaison modifiable par l'utilisateur.
+- **Favoris V0 :** un booléen par capture, étoile et filtre rapide dans les deux vues de bibliothèque.
+- **Sélection multiple :** **hors V0**, même si une image de référence ancienne montre des cases à cocher. Pas d'opération en lot.
+- **Popups :** traiter la capture G-03P comme référence de style et préserver exactement les comportements métier.
+- **Autres outils :** Flou, Masque, calques, retouche avancée et import d'images exclus.
+- **Un seul logo** pour les différents écrans : celui du splash. Le fond bleu du bureau sur le PNG ne doit pas être incrusté comme fond fixe dans l'application.
+- **Aucune référence au numéro de version du simulateur** ne doit devenir le nom du produit ou apparaître comme élément permanent de la V0.
 
-**Pas de travail de développement avant validation finale du guide et découpage explicite des missions.**
+**Étape suivante :** découper les missions Codex après validation documentaire. Ce guide est une référence ; sa publication ne lance aucun développement.
