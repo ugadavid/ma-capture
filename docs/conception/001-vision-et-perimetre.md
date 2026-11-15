@@ -4,9 +4,9 @@
 |---|---|
 | Projet | **Ma Capture** — application Windows de capture d’écran, d’annotation et de classement |
 | Nature | Document d’encadrement **fonctionnel**, préalable à toute mission de développement |
-| Version du document | **0.2 — harmonisation transversale** |
+| Version du document | **0.3 — alignement avec le prototype graphique** |
 | Date | **14 novembre 2026** |
-| Statut | **Cadrage en cours** : décisions actées et questions ouvertes identifiées |
+| Statut | **Cadrage fonctionnel établi**, maquette HTML de référence disponible ; aucune mission Codex lancée |
 | Document suivant | [002 — Parcours utilisateurs et ergonomie](002-parcours-utilisateurs-et-ergonomie.md) |
 
 > **Convention de lecture** — **[VALIDÉ]** signifie explicitement retenu lors du cadrage ; **[À ÉTUDIER]** signifie qu’aucune solution définitive n’a été arrêtée ; **[HORS V0]** désigne une fonction volontairement écartée de la première version. Ce document n’autorise **aucune implémentation** ni mission Codex à ce stade.
@@ -32,6 +32,7 @@ L’ambition n’est ni de refaire Photoshop, ni de développer un gestionnaire 
 - Des annotations graphiques simples permettant de **désigner des zones** et d’ajouter du texte.
 - Des informations documentaires facultatives, saisissables lors de la capture ou ultérieurement.
 - Leur conservation dans une bibliothèque locale.
+- **Favoris V0** : marquer/démarquer une capture par étoile et retrouver les favoris en mosaïque ou liste.
 - Leur export manuel en image PNG ou JPEG.
 
 ### 2.2 Ce qui n’entre pas dans le périmètre [VALIDÉ]
@@ -66,7 +67,7 @@ D’autres fonctions seront volontairement exclues si elles compromettent la sim
 
 **[VALIDÉ]** La capture doit être placée sans délai dans un **espace de récupération persistant**, afin de ne pas disparaître en cas de plantage avant son enregistrement définitif. Il ne s’agit **pas** d’une table SQLite `TEMP`, qui disparaîtrait avec sa connexion.
 
-**[VALIDÉ]** Les trois modes de V0 sont **zone rectangulaire, fenêtre et écran entier**, avec **zone rectangulaire présélectionnée au lancement**. Le raccourci global éventuel reste un détail non décidé.
+**[VALIDÉ]** Les trois modes de V0 sont **zone rectangulaire, fenêtre et écran entier**, avec **zone rectangulaire présélectionnée au lancement**. Le raccourci global de V0 est **`Ctrl + Alt + C`**, distinct de l'outil Windows ; sa personnalisation est reportée en V2.
 
 ### 3.2 Annoter et documenter, sans étape supplémentaire
 
@@ -178,10 +179,12 @@ La **sauvegarde/restauration manuelle en ZIP des deux bases** est définie dans 
 
 ## 6. Principes d’interface [VALIDÉ]
 
-La V0 s’organise en **deux espaces**, sans multiplier les écrans :
+La V0 s’organise autour du **splash de vérification**, d'un **petit bandeau de capture**, puis de **deux espaces de travail**, sans multiplier les écrans :
 
 1. **Éditeur / capture** : image annotable immédiatement à gauche ; barre d’outils ; panneau documentaire à droite ; **un seul bouton Enregistrer** avec raccourci.
 2. **Bibliothèque** : retrouver les captures archivées, consulter leurs miniatures et informations, rechercher / classer, puis rouvrir la même vue d’édition.
+
+Le **guide graphique** et le [prototype HTML validé](../graphisme/ma-capture-prototype.html) sont les références d'interface, complétés par les six PNG de `docs/graphisme/`. Les popups applicatifs suivent la capture `03-editeur-popup.png`.
 
 Le panneau documentaire doit pouvoir être utilisé immédiatement, mais **jamais requis** pour enregistrer. Les adaptations de largeur, le zoom, les filtres et la navigation précise relèvent du document 002.
 
@@ -213,6 +216,9 @@ Les stratégies de sauvegarde, de migration, de réparation et les scénarios de
 | D-010 | Deux espaces : **éditeur** et **bibliothèque** ; pas d’application de retouche multi-calques. |
 | D-011 | Multimoniteur avancé et fonctionnalités lourdes **hors V0**. |
 | D-012 | **Pas de mission Codex** tant que le dossier de conception n’est pas suffisamment défini et validé. |
+| D-013 | Favoris par étoile, filtre dédié en mosaïque et liste ; pas de sélection multiple en V0. |
+| D-014 | Raccourci global `Ctrl + Alt + C` en V0 ; personnalisation en V2. |
+| D-015 | Guide HTML de référence, PNG cohérents et popups applicatifs harmonisés graphiquement. |
 
 ## 9. Points encore ouverts après consolidation
 
