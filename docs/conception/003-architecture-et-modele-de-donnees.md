@@ -4,7 +4,7 @@
 |---|---|
 | Projet | **Ma Capture** |
 | Nature | Document de conception technique et de modèle de données, **sans implémentation** |
-| Version | **0.2 — harmonisation transversale** |
+| Version | **0.3 — alignement interface et favoris V0** |
 | Date | **14 novembre 2026** |
 | État | Architecture générale arrêtée ; détails de sûreté différés au document 004 |
 | Documents précédents | [001 — Vision et périmètre](001-vision-et-perimetre.md) · [002 — Parcours et ergonomie](002-parcours-utilisateurs-et-ergonomie.md) |
@@ -100,6 +100,7 @@ CREATE TABLE Captures (
     description      TEXT NOT NULL DEFAULT '',
     commentaire      TEXT NOT NULL DEFAULT '',
     categorie_id     INTEGER,
+    favori           INTEGER NOT NULL DEFAULT 0 CHECK (favori IN (0,1)),
     annotations_json TEXT NOT NULL DEFAULT '[]',
     miniature        BLOB
 );
@@ -113,6 +114,7 @@ CREATE TABLE Captures (
 - La date de capture est produite automatiquement.
 - `description` et `commentaire` sont documentaires, non dessinés sur l'image.
 - Une capture possède **zéro ou une catégorie**.
+- **`favori`** est un entier SQLite de valeur **0 ou 1** (défaut : 0) ; l'étoile et le filtre Favoris utilisent **le même champ** dans les deux vues, sans table supplémentaire ni mécanisme documentaire distinct.
 - `annotations_json` contient le **résultat actuel**, prêt à charger sans rejouer d'historique.
 - `miniature` est une petite image d'aperçu pour la bibliothèque ; elle ne remplace jamais le BLOB original.
 
@@ -191,7 +193,7 @@ Le JSON de **récupération provisoire**, s'il existe, est un filet de sécurit�
 
 **[ORIENTATION RETENUE POUR LA V0]** La miniature est stockée dans `Captures.miniature` : elle est proche des informations utilisées par la vue mosaïque et évite d'ouvrir l'image originale complète pour chaque vignette.
 
-- Liste et mosaïque lisent le catalogue.
+- Liste et mosaïque lisent le catalogue, **y compris le statut Favoris**. Le filtre Favoris est une simple condition sur le booléen de la fiche.
 - L'image originale n'est chargée depuis `images.db` **qu'au moment où elle est nécessaire** (ouverture dans l'éditeur, rendu / export).
 - La miniature peut être régénérée à partir de l'original si besoin ; elle n'est pas la référence documentaire.
 - Éviter le chargement simultané d'une bibliothèque entière de BLOB complets.
@@ -343,6 +345,8 @@ Le rôle du contrôle est d'éliminer de simples résidus d'une opération inter
 | A-013 | **Aucun ATTACH**, aucune transaction interbase ou architecture distribuée imposés |
 | A-014 | Exports et copies presse-papiers sortants sans suivi documentaire |
 | A-015 | Aucun travail de développement déclenché par ces documents |
+| A-016 | `Captures.favori` booléen SQLite (0/1) ; filtre dans les deux vues sans table supplémentaire |
+| A-017 | Prototype HTML et PNG comme références visuelles, sans transposition du simulateur dans la logique native |
 
 ## 12. Détails réservés à la suite
 
