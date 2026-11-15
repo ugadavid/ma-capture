@@ -4,7 +4,7 @@
 |---|---|
 | Projet | **Ma Capture** |
 | Nature | Document de conception — protection des données et comportement après interruption |
-| Version | **0.2 — harmonisation transversale** |
+| Version | **0.3 — références de dialogues explicitées** |
 | Date | **14 novembre 2026** |
 | Statut | **Cadrage fonctionnel et technique** ; critères de recette à formaliser dans le document 005 |
 | Documents précédents | [001 — Vision et périmètre](001-vision-et-perimetre.md) · [002 — Ergonomie](002-parcours-utilisateurs-et-ergonomie.md) · [003 — Architecture et modèle de données](003-architecture-et-modele-de-donnees.md) |
@@ -120,6 +120,8 @@ L'image doit rester **visible derrière le dialogue** :
 
 Ce même principe s'applique à une nouvelle capture demandée alors que l'actuelle est non enregistrée, à la fermeture, au changement de fiche ou à la navigation qui abandonnerait l'édition.
 
+**Référence visuelle :** les popups applicatifs suivent [03-editeur-popup.png](../graphisme/03-editeur-popup.png) et le [guide d'écran](../graphisme/guide-des-ecrans-ma-capture.md). Leur style ne modifie pas la sémantique des trois boutons ni les règles de protection du provisoire ; les fenêtres standards de choix de fichiers Windows peuvent rester natives.
+
 En cas de récupération au démarrage :
 - **Enregistrer** archive ou actualise la capture récupérée ;
 - **Ne pas enregistrer** abandonne explicitement le travail récupéré ;
@@ -168,7 +170,7 @@ Si une interruption survient entre les deux, la **fiche sans image** est détect
 
 Les catégories et tags qui peuvent être utilisés par d'autres fiches ne sont pas supprimés automatiquement.
 
-**[VALIDÉ]** La suppression **volontaire** d'une capture dans la bibliothèque demande **confirmation**. Si l'utilisateur annule, la capture, son BLOB et ses associations sont conservés. Le nettoyage technique des orphelins au démarrage, lui, reste **silencieux**, sans confirmation.
+**[VALIDÉ]** La suppression **volontaire** d'une capture dans la bibliothèque demande **confirmation**, présentée dans le style de la popup de référence. Si l'utilisateur annule, la capture, son BLOB et ses associations sont conservés. Le nettoyage technique des orphelins au démarrage, lui, reste **silencieux**, sans confirmation.
 
 ## 9. Sauvegarde manuelle : deux bases, un ZIP [VALIDÉ]
 
